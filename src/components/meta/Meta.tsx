@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-const defaultDescription = "Nail salon, beauty services and products";
+const defaultDescription = "Customise your own autoclicker and share with others. Color detection, mouse clicking, mouse movements, typing and keyboard events.";
 
 interface Props {
     description?: string
