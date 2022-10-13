@@ -1,0 +1,15 @@
+.container{
+    a{
+        &:hover *{
+            color: var(--clr-main);
+        }
+        span{
+            display: block;
+        }
+
+        svg{
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+}

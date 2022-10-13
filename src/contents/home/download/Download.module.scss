@@ -1,0 +1,43 @@
+.container{
+    margin: 0 auto;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+
+    button{
+        width: 100%;
+        margin-bottom: 3rem;
+
+        &:hover * {
+            color: var(--clr-main);
+        }
+
+        span{
+            display: block;
+        }
+        svg{
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        progress {
+            height: 5px;
+            width: 100px;
+            background-color: black;
+            
+            &::-moz-progress-bar {
+                background: black;
+            }
+                      
+            &::-webkit-progress-value {
+                background: var(--clr-main);
+            }
+            
+            &::-webkit-progress-bar {
+                background: black;
+            }
+        }
+        
+    }
+
+}

@@ -1,0 +1,36 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {    
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    min-width: 320px;
+    height: 100vh;
+}
+
+a, button, input, li, ul, p, q, span, small, svg, b, h1, h2, h3 {
+    text-decoration: none;
+    outline: none;
+    border: none;
+    background: none;
+    list-style: none;
+    box-sizing: border-box;
+    color: white;
+}
+
+h1{
+    margin-bottom: 0.5rem;
+}
+
+img{
+    object-fit: cover;
+}
+
+button, a{
+    cursor: pointer;
+}
+
+:root{
+    --clr-main: rgb(194, 65, 233);
+}

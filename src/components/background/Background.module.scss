@@ -1,0 +1,83 @@
+.container{
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    @mixin teardrops($left, $seconds) {
+        margin-left: $left;
+        &::after{
+            animation-delay: $seconds
+        }
+    }
+    
+    .line {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        overflow: hidden;
+  
+        &::after{
+            content: '';
+            display: block;
+            position: absolute;
+            height: 30vh;
+            width: 100%;
+            top: -50%;
+            left: 0;
+            animation: drop 5s 0s infinite;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #8e09a6 75%, #ffffff 100%);
+        }
+        
+        &:nth-child(1){
+            @include teardrops(-40%, 1s);
+        }        
+        &:nth-child(2){
+            @include teardrops(-20%, 1.5s)
+        }       
+        &:nth-child(3){
+            @include teardrops(0%, 2s)
+        }
+        &:nth-child(4){
+            @include teardrops(20%, 2.5s)
+        }
+        &:nth-child(5){
+            @include teardrops(40%, 3s)
+        }
+
+        &:nth-child(6){
+            @include teardrops(-40%, 3s)
+        }
+        &:nth-child(7){
+            @include teardrops(-20%, 3.5s)
+        }
+        &:nth-child(8){
+            @include teardrops(0%, 4s)
+        }
+        &:nth-child(9){
+            @include teardrops(20%, 4.5s)
+        }
+        &:nth-child(10){
+            @include teardrops(40%, 5s)
+        }
+
+        
+        @keyframes drop {
+            0% { 
+                top: -50%
+            }
+            100% {
+                top: 120%
+            }
+        }
+
+    }
+}
