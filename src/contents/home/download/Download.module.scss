@@ -1,20 +1,24 @@
 .container{
-    margin: 0 auto;
-    max-width: 500px;
     display: flex;
     align-items: center;
+    gap: 1rem;
 
     button{
         width: 100%;
-        margin-bottom: 3rem;
-
-        &:hover * {
-            color: var(--clr-main);
+        background-color: var(--clr-dark-fade);
+        border-radius: 10px;
+        border: 2px solid transparent;
+        padding: 2rem;
+        padding-bottom: 1rem;
+        
+        &:hover{
+            border: 2px solid white;
         }
 
         span{
             display: block;
         }
+
         svg{
             font-size: 3rem;
             margin-bottom: 0.5rem;
@@ -30,14 +34,23 @@
             }
                       
             &::-webkit-progress-value {
-                background: var(--clr-main);
+                background: white;
             }
             
             &::-webkit-progress-bar {
-                background: black;
+                background: var(--clr-dark-fade);
             }
         }
-        
+
     }
 
+}
+
+@media (max-width: 420px){
+    .container{
+        display: block;
+        button{
+            margin: 1rem 0;
+        }
+    }
 }

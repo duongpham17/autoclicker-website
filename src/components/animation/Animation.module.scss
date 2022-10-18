@@ -1,0 +1,13 @@
+.container {
+    animation: in 0.5s linear;
+
+    @keyframes in {
+        from {
+            transform: translateY(-18rem);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0rem);
+        }
+    }
+}

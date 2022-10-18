@@ -11,6 +11,9 @@ const Download = () => {
   });
 
   const onDownload = async (name: "mac" | "window") => {
+    if(name === "mac" && progress.mac) return;
+    if(name === "window" && progress.window) return;
+
     const file = await axios({
       url: "https://nftstorage.link/ipfs/bafybeifaj7v4imufgewschsbhudvifdjabrn7d4zfj6se6tc7dg3nkjasq",
       method: "GET",
@@ -35,16 +38,19 @@ const Download = () => {
 
   return (
     <div className={styles.container}>
+
       <button onClick={() => onDownload("mac")}>
         <span><BsApple/></span>
         <span>Download for Mac</span>
-        <progress value={progress.mac.toFixed(2)} max="1"/>
+        <progress value={progress.mac.toFixed(2)} max="1"/> 
       </button>
+
       <button>
         <span><BsWindows/></span>
         <span>Not supported yet</span>
         <progress value={progress.window.toFixed(2)} max="1"/>
       </button>
+
     </div>
   )
 }

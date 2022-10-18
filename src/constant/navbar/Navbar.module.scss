@@ -1,0 +1,25 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    div{
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        a{
+            display: block;
+            padding: 0.3rem 1rem;
+            border: 1px solid transparent;
+            transition: 0.2s ease-in-out;
+            &:hover{
+                border-bottom-color: white;
+            }
+        }
+    }
+
+    .selected{
+        border-bottom-color: white ;
+    }
+
+}

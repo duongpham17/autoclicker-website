@@ -7,6 +7,8 @@ html, body {
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     min-width: 320px;
     height: 100vh;
+    overflow-x: hidden;
+    background: black;
 }
 
 a, button, input, li, ul, p, q, span, small, svg, b, h1, h2, h3 {
@@ -17,6 +19,7 @@ a, button, input, li, ul, p, q, span, small, svg, b, h1, h2, h3 {
     list-style: none;
     box-sizing: border-box;
     color: white;
+    transition: 0.3s ease-in-out;
 }
 
 h1{
@@ -33,4 +36,5 @@ button, a{
 
 :root{
     --clr-main: rgb(194, 65, 233);
+    --clr-dark-fade: rgba(64, 64, 64, 0.176);
 }

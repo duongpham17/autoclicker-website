@@ -1,11 +1,5 @@
 .container{
     background-color: black;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
     z-index: -1;
 
     @mixin teardrops($left, $seconds) {
@@ -38,19 +32,19 @@
         }
         
         &:nth-child(1){
-            @include teardrops(-40%, 1s);
+            @include teardrops(-40%, 0s);
         }        
         &:nth-child(2){
-            @include teardrops(-20%, 1.5s)
+            @include teardrops(-20%, 0.5s)
         }       
         &:nth-child(3){
-            @include teardrops(0%, 2s)
+            @include teardrops(0%, 1s)
         }
         &:nth-child(4){
-            @include teardrops(20%, 2.5s)
+            @include teardrops(20%, 1.5s)
         }
         &:nth-child(5){
-            @include teardrops(40%, 3s)
+            @include teardrops(40%, 2s)
         }
 
         &:nth-child(6){

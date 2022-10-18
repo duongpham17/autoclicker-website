@@ -1,34 +1,31 @@
 import styles from './Home.module.scss';
-import React from 'react';
+import Animation from 'components/animation/Animation';
 
 import Logo from './logo/Logo';
 import Download from './download/Download';
 import Github from './github/Github';
-import About from './about/About';
-import Contact from './contact/Contact';
  
 const Home = () => {
   return (
-    <div className={styles.container}>
+      <Animation>
+      <div className={styles.container}>
 
-      <section>
-        <Logo />
-      </section>
+        <b>Autoclickers is open source and free to use</b>
 
-      <section>
-        <Download />
-        <Github />
-      </section>
+        <section>
+          <Logo />
+        </section>
 
-      <section>
-        <About />
-      </section>
+        <section>
+          <Download />
+        </section>
 
-      <section>
-        <Contact />
-      </section>
+        <section>
+          <Github />
+        </section>
 
     </div>
+    </Animation>
   )
 }
 
