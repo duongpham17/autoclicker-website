@@ -14,8 +14,13 @@ const Download = () => {
     if(name === "mac" && progress.mac) return;
     if(name === "window" && progress.window) return;
 
+    const mac_dmg_url = "https://nftstorage.link/ipfs/bafybeidmdgzcxgvcvtqzztpuuwqbfmqax4cjtzuvus2fbfh7c2stpeggni";
+    const window_exe_url = "";
+
+    const url = name === "mac" ? mac_dmg_url : window_exe_url;
+
     const file = await axios({
-      url: "https://nftstorage.link/ipfs/bafybeib5lh4p4dli4y6mwwzfvs3epmsxmc2bpxk4ji63cr7bz5t6lceqoq",
+      url: url,
       method: "GET",
       responseType: "blob", // important
       onDownloadProgress: (progressEvent) => {
@@ -26,8 +31,8 @@ const Download = () => {
     const href = URL.createObjectURL(file.data);
     const link = document.createElement('a');
     link.href = href;
-    if(name === "mac") link.setAttribute('download', 'autoclicker.dmg'); //or any other extension
-    if(name === "window") link.setAttribute('download', 'autoclicker.dmg'); //or any other extension
+    if(name === "mac") link.setAttribute('download', 'Autoclickers.dmg'); //or any other extension
+    if(name === "window") link.setAttribute('download', 'Autoclickers.dmg'); //or any other extension
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
