@@ -17,8 +17,8 @@ const Navbar = () => {
           <Link href="/"><a className={onPathname("")}>Download</a></Link>
         </div>
         <div>
-            <Link href="/about"><a className={onPathname("about")}>About</a></Link>
-            {/* <Link href="/guide"><a className={onPathname("guide")}>Guide</a></Link> */}
+          <Link href="/tutorials"><a className={onPathname("tutorials")}>Tutorials</a></Link>
+          <Link href="/about"><a className={onPathname("about")}>About</a></Link>
         </div>
     </div>
   )

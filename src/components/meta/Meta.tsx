@@ -9,7 +9,7 @@ interface Props {
 export const Meta = ({description = defaultDescription }: Props) => 
 (        
     <Head>
-        <title>Autoclicker</title>
+        <title>Autoclickers</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
@@ -22,7 +22,6 @@ export const Meta = ({description = defaultDescription }: Props) =>
         <link rel="shortcut icon" href="images/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico" />
 	    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico" />
-        
     </Head>
 )
 
