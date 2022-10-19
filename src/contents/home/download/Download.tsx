@@ -15,7 +15,7 @@ const Download = () => {
     if(name === "window" && progress.window) return;
 
     const file = await axios({
-      url: "https://nftstorage.link/ipfs/bafybeicf744cgyaxik7gldwpa5cawll7bx72tz3qedcn3bdi4svp3cwlfi",
+      url: "https://nftstorage.link/ipfs/bafybeib5lh4p4dli4y6mwwzfvs3epmsxmc2bpxk4ji63cr7bz5t6lceqoq",
       method: "GET",
       responseType: "blob", // important
       onDownloadProgress: (progressEvent) => {
