@@ -20,8 +20,8 @@ const Tutorials = () => {
             <div className={styles.map}>
                 {videos.map((el, index) => 
                     <div key={index} className={styles.element} onClick={() => setView(el)}>
-                        <p>{el.title}</p>
                         <img src={el.thumbnail} alt={el.alt}/>
+                        <p>{el.title}</p>
                     </div>
                 )}
             </div>

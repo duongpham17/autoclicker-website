@@ -14,7 +14,7 @@ const Download = () => {
     if(name === "mac" && progress.mac) return;
     if(name === "window" && progress.window) return;
 
-    const mac_dmg_url = "https://nftstorage.link/ipfs/bafybeidmdgzcxgvcvtqzztpuuwqbfmqax4cjtzuvus2fbfh7c2stpeggni";
+    const mac_dmg_url = "https://nftstorage.link/ipfs/bafybeiet3x25js4xjlhomgtujolvxags4mfbyiuon6gum4blb42azqnwbu";
     const window_exe_url = "";
 
     const url = name === "mac" ? mac_dmg_url : window_exe_url;
