@@ -14,7 +14,7 @@ const Download = () => {
     if(name === "mac" && progress.mac) return;
     if(name === "window" && progress.window) return;
 
-    const mac_dmg_url = "https://nftstorage.link/ipfs/bafybeib5askgund5pmhu6tbuluewdjsajbq7pvwghjr542zkjxhihgkkni";
+    const mac_dmg_url = "https://ipfs.io/ipfs/bafybeib5askgund5pmhu6tbuluewdjsajbq7pvwghjr542zkjxhihgkkni";
     const window_exe_url = "";
 
     const url = name === "mac" ? mac_dmg_url : window_exe_url;
@@ -24,6 +24,7 @@ const Download = () => {
       method: "GET",
       responseType: "blob", // important
       onDownloadProgress: (progressEvent) => {
+        console.log(progressEvent.progress);
           if(name === "mac") setProgress(state => ({...state, mac: Number(progressEvent.progress)}));
           if(name === "window") setProgress(state => ({...state, window: Number(progressEvent.progress)}));
       }
@@ -39,7 +40,7 @@ const Download = () => {
     URL.revokeObjectURL(href);
     if(name === "mac")setProgress(state => ({...state, mac: 0}))
     if(name === "window")setProgress(state => ({...state, mac: 0}))
-  }
+  };
 
   return (
     <div className={styles.container}>
