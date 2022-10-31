@@ -14,7 +14,7 @@ const Download = () => {
     if(name === "mac" && progress.mac) return;
     if(name === "window" && progress.window) return;
 
-    const mac_dmg_url = "https://ipfs.io/ipfs/bafybeifbyd52k7hrkiig3isuwvab5bj3xxpumljfrpmn4bjhcq7ra7xqzu";
+    const mac_dmg_url = "https://ipfs.io/ipfs/bafybeiasfeqwudk3ng4bxhsp62usoeintyqmoc33boxcc6wdbbjsond7cy";
     const window_exe_url = "";
 
     const url = name === "mac" ? mac_dmg_url : window_exe_url;
