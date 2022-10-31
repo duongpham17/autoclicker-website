@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+    padding: 2rem;
+
+    .box{
+        text-align: left;
+    }
+
+    h1{
+        margin-bottom: 2rem;
+        font-size: 3rem;
+    }
+
+    b{
+        font-size: 1.3rem;
+    }
+}
