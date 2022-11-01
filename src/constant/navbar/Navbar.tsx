@@ -18,7 +18,6 @@ const Navbar = () => {
         </div>
         <div>
           <Link href="/tutorials"><a className={onPathname("tutorials")}>Tutorials</a></Link>
-          <Link href="/about"><a className={onPathname("about")}>About</a></Link>
         </div>
     </div>
   )

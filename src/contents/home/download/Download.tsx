@@ -10,8 +10,8 @@ const Download = () => {
     window: 0,
   });
 
-  const mac_dmg_url = "https://ipfs.io/ipfs/bafybeibiodppvbacfcsze5t2mibipuzhm4tnopsqu22g3huf6t2qlkddiy";
-  const window_exe_url = "https://ipfs.io/ipfs/bafybeigxtdhkwybxugozbddrie2gwtywpw726nmdq6wriearvbzgr62psi";
+  const mac_dmg_url = "https://ipfs.io/ipfs/bafybeig553zkxlerczz6g3syparbiwmlebsc2t6bg7iumq3fqrzvcn4gnu";
+  const window_exe_url = "https://ipfs.io/ipfs/bafybeigxmogalso74y6qsswjplkifmmcdmddhdcuo74xwnf2rp5wswslkm";
 
   const onDownload = async (name: "mac" | "window", url: string) => {
     if(name === "mac" && progress.mac) return;

@@ -4,16 +4,22 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <div className={styles.container}>
-        <footer>
-            <div>
-                <p>	&#169; 2022, Autolickers.co.uk</p>
-            </div>
-            <div>
-                <Link href="/contact"><a>Contact</a></Link>
-            </div>
-        </footer>
-    </div>
+    <footer className={styles.container}>
+
+      <div className={styles.content}>
+
+        <div>	
+          <p>&#169; 2022, Autolickers.co.uk</p>
+          <p>Crested by Tung.d.p</p>
+        </div>
+        <div>
+          <Link href="/contact"><a>Contact</a></Link>
+          <Link href="/about"><a>About</a></Link>
+        </div>
+
+      </div>
+
+    </footer>
   )
 }
 
