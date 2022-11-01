@@ -46,6 +46,24 @@
 
 }
 
+.started{
+    svg{
+        animation: glow 3s linear infinite;
+    }
+
+    @keyframes glow {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity:  0.3;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+}
+
 @media (max-width: 420px){
     .container{
         display: block;
