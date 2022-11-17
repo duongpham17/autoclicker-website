@@ -4,19 +4,16 @@
     width: 100%;
     background-color: black;
     z-index: 1000;
+    border-top: 1px solid rgb(31, 31, 31);
 
-    .content{
+    div{
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0.5rem;
-        border-top: 1px solid rgb(31, 31, 31);
-        margin: 0.5rem;
-        div{
-            a{
-                display: block;
-                text-align: right;
-            }
+
+        a{
+            margin-left: 0.5rem;
         }
     }
 

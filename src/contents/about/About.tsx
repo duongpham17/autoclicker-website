@@ -8,9 +8,7 @@ const About = () => {
         <b>
             There are many autoclickers out there but its too basic in utility and not free.
             <br/><br/>
-            I wanted more utility and it to be free.
-            <br/><br/>
-            I hope this application can help you in automating repetitive task.
+            I hope this application can help you in automating repetitive tasks.
         </b>
     </CenterLeft>
   )
