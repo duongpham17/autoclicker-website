@@ -1,6 +1,6 @@
 import express, {IRouter} from 'express';
-import { protect, restrict } from '../controllers/authentication';
-import { find, create, update, remove } from '../controllers/scripts';
+import { protect, restrict } from '../../controllers/authentication';
+import { find, create, update, remove } from '../../controllers/scripts';
 
 const router: IRouter = express.Router();
 

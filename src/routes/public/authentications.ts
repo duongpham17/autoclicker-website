@@ -1,5 +1,5 @@
 import express, {IRouter} from 'express';
-import { protect, persist, login, signup, code } from '../controllers/authentication';
+import { protect, persist, login, signup, code } from '../../controllers/authentication';
 
 const router: IRouter = express.Router();
 
