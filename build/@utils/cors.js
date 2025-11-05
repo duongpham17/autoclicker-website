@@ -33,8 +33,8 @@ exports.corsPrivate = (0, cors_1.default)({
         'Accept',
     ],
 });
-// simple public CORS for GET requests
+// simple public CORS for GET requests and POST for authentications
 exports.corsPublic = (0, cors_1.default)({
     origin: '*',
-    methods: ['GET'],
+    methods: ['GET', 'POST'],
 });

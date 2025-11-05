@@ -32,8 +32,8 @@ export const corsPrivate = cors({
   ],
 });
 
-// simple public CORS for GET requests
+// simple public CORS for GET requests and POST for authentications
 export const corsPublic = cors({
   origin: '*',
-  methods: ['GET'],
+  methods: ['GET', 'POST'],
 });
