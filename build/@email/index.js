@@ -8,10 +8,15 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 exports.email_address = process.env.EMAIL_ADDRESS;
 exports.email_password = process.env.EMAIL_PASSWORD;
 const Email = () => nodemailer_1.default.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
     auth: {
-        user: exports.email_address,
-        pass: exports.email_password,
-    }
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD,
+    },
+    tls: {
+        rejectUnauthorized: false,
+    },
 });
 exports.Email = Email;
