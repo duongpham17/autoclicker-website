@@ -2,7 +2,8 @@
 import cors from 'cors';
 
 const production_url: string[] = [
-  "https://autoclicker-f60h.onrender.com"
+  "https://autoclicker-f60h.onrender.com",
+  'http://localhost:3000'
 ];
 
 const development_url: string[] = [

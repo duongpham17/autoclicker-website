@@ -7,7 +7,8 @@ exports.corsPublic = exports.corsPrivate = void 0;
 // cors.ts (backend CORS middleware setup)
 const cors_1 = __importDefault(require("cors"));
 const production_url = [
-    "https://autoclicker-f60h.onrender.com"
+    "https://autoclicker-f60h.onrender.com",
+    'http://localhost:3000'
 ];
 const development_url = [
     'http://localhost:3000'
