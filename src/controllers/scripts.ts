@@ -1,8 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
 import { appError, asyncBlock } from '../@utils/helper';
-import { InjectUserToRequest } from '../@types/models';
 import Scripts from '../models/scripts';
-import Users from '../models/users';
+import Users, {InjectUserToRequest} from '../models/users';
 
 export const find = asyncBlock(async(req: InjectUserToRequest, res: Response, next: NextFunction) => {
 

@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import Stripe from 'stripe';
 import { asyncBlock } from '../../@utils/helper';
-import { InjectUserToRequest } from '../../@types/models';
+import { InjectUserToRequest } from '../../models/users';
 
 const stripe = new Stripe(process.env.STRIPE_TEST_SECRET_KEY as string);
 

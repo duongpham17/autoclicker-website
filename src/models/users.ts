@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import mongoose, { Schema, model, Types, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
@@ -15,6 +16,10 @@ export interface IUsersApi {
     createdAt: number,
     correctPassword: (candidatePassword: string, userPassword: string) => Promise<boolean>,
     createVerifyToken: () => Promise<{ hashToken: string, code: string }>
+};
+
+export interface InjectUserToRequest extends Request {
+    user: IUsersApi
 };
 
 export interface IUsersDocument extends Document, IUsersApi {

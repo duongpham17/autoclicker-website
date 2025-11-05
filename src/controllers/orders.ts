@@ -1,6 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import { appError, asyncBlock } from '../@utils/helper';
-import { InjectUserToRequest } from '../@types/models';
+import { InjectUserToRequest } from '../models/users';
 import Orders from '../models/orders';
 
 export const find = asyncBlock(async(req: InjectUserToRequest, res: Response, next: NextFunction) => {

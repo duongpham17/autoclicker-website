@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { EMAIL_SIGNUP, EMAIL_LOGIN } from '../@email/authnetication';
 import { asyncBlock, appError } from '../@utils/helper';
-import { InjectUserToRequest } from '../@types/models';
-import User from '../models/users';
+import User, { InjectUserToRequest } from '../models/users';
 import jwt from 'jsonwebtoken';
 
 export const createSecureToken = (id: string) => {
