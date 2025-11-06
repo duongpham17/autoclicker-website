@@ -15,9 +15,23 @@ const development_url = [
 ];
 const whitelist = process.env.NODE_ENV === 'development' ? development_url : production_url;
 exports.corsPrivate = (0, cors_1.default)({
-    origin: whitelist,
+    origin: (origin, callback) => {
+        if (!origin || whitelist.includes(origin)) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'device-remember-token', 'Access-Control-Allow-Origin', 'Origin', 'Accept'],
+    allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'X-Requested-With',
+        'device-remember-token',
+        'Origin',
+        'Accept'
+    ],
 });
 // simple public CORS for GET requests and POST for authentications
 exports.corsPublic = (0, cors_1.default)({

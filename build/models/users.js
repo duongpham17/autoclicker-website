@@ -43,11 +43,6 @@ const crypto_1 = __importDefault(require("crypto"));
 ;
 ;
 const schema = new mongoose_1.Schema({
-    name: {
-        type: String,
-        trim: true,
-        lowercase: true,
-    },
     email: {
         type: String,
         trim: true,
@@ -63,46 +58,40 @@ const schema = new mongoose_1.Schema({
         type: Number,
         default: 1
     },
-    verified: {
-        type: Boolean,
-        default: false
-    },
-    code: {
+    password: {
         type: String,
         select: false,
     },
-    confirmation: {
+    reset_link_hash: {
         type: String,
-        select: false,
+        select: false
     },
-    confirmation_expiration: {
+    reset_password_expiration: {
         type: Number,
         default: () => Date.now() + (1 * 60 * 60 * 1000),
+        select: false
     },
     createdAt: {
         type: Number,
         default: Date.now,
     },
 });
-// Hash code before save
 schema.pre('save', async function (next) {
-    if (!this.isModified('code') || !this.code)
+    if (!this.isModified('password') || !this.password)
         return next();
-    this.code = await bcryptjs_1.default.hash(this.code, 12);
+    this.password = await bcryptjs_1.default.hash(this.password, 12);
     next();
 });
-schema.methods.correctPassword = async function (candidateCode, userCode) {
-    return bcryptjs_1.default.compare(candidateCode, userCode);
+schema.methods.correctPassword = async function (tryPassword, userPassword) {
+    return bcryptjs_1.default.compare(tryPassword, userPassword);
 };
 schema.methods.createVerifyToken = async function () {
-    const verifyToken = crypto_1.default.randomBytes(32).toString('hex');
-    const hashToken = crypto_1.default.createHash('sha256').update(verifyToken).digest('hex');
-    const code = Math.floor(100000 + Math.random() * 900000);
-    this.code = code.toString();
-    this.confirmation = hashToken;
-    this.confirmation_expiration = Date.now() + (5 * 60 * 1000);
+    const token = crypto_1.default.randomBytes(16).toString('hex');
+    const hashToken = crypto_1.default.createHash('sha256').update(token).digest('hex');
+    this.reset_link_hash = hashToken;
+    this.reset_password_expiration = Date.now() + (5 * 60 * 1000); // 5 minute expiry
     await this.save();
-    return { hashToken, code };
+    return token;
 };
 const Users = mongoose_1.default.models.Users || (0, mongoose_1.model)('Users', schema);
 exports.default = Users;

@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, Types, Document } from 'mongoose';
+import mongoose, { Schema, model, Types, Document, Model } from 'mongoose';
 
 export interface IScriptsApi {
     _id: string | Types.ObjectId,
@@ -79,5 +79,5 @@ const schema = new Schema<IScriptsDocument>({
 });
 
 
-const Scripts = mongoose.models.Scripts || model<IScriptsDocument>('Scripts', schema);
+const Scripts: Model<IScriptsDocument> = mongoose.models.Scripts || model<IScriptsDocument>('Scripts', schema);
 export default Scripts;

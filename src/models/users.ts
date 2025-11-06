@@ -1,21 +1,20 @@
 import { Request } from 'express';
-import mongoose, { Schema, model, Types, Document } from 'mongoose';
+import mongoose, { Schema, model, Types, Document, Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 
 export interface IUsersApi {
     _id: string | Types.ObjectId,
-    name: string,
     email: string,
     role: "user" | "admin",
     verified: boolean,
     credit: number,
-    code: string,
-    confirmation: string,
-    confirmation_expiration: number,
+    password: string,
+    reset_password_expiration: number,
+    reset_link_hash: string,
     createdAt: number,
     correctPassword: (candidatePassword: string, userPassword: string) => Promise<boolean>,
-    createVerifyToken: () => Promise<{ hashToken: string, code: string }>
+    createVerifyToken: () => Promise<string>,
 };
 
 export interface InjectUserToRequest extends Request {
@@ -27,11 +26,6 @@ export interface IUsersDocument extends Document, IUsersApi {
 };
 
 const schema = new Schema<IUsersDocument>({
-    name: {
-        type: String,
-        trim: true,
-        lowercase: true,
-    },
     email: {
         type: String,
         trim: true,
@@ -47,21 +41,18 @@ const schema = new Schema<IUsersDocument>({
         type: Number,
         default: 1
     },
-    verified: {
-        type: Boolean,
-        default: false
-    },
-    code: {
+    password: {
         type: String,
         select: false,
     },
-    confirmation: {
+    reset_link_hash: {
         type: String,
-        select: false,
+        select: false
     },
-    confirmation_expiration: {
+    reset_password_expiration: {
         type: Number,
         default: () => Date.now() + (1 * 60 * 60 * 1000),
+        select: false
     },
     createdAt: {
         type: Number,
@@ -69,27 +60,24 @@ const schema = new Schema<IUsersDocument>({
     },
 });
 
-// Hash code before save
 schema.pre('save', async function(next) {
-    if (!this.isModified('code') || !this.code) return next();
-    this.code = await bcrypt.hash(this.code, 12);
+    if (!this.isModified('password') || !this.password) return next();
+    this.password = await bcrypt.hash(this.password, 12);
     next();
 });
 
-schema.methods.correctPassword = async function(candidateCode: string, userCode: string): Promise<boolean> {
-    return bcrypt.compare(candidateCode, userCode);
+schema.methods.correctPassword = async function(tryPassword: string, userPassword: string): Promise<boolean> {
+    return bcrypt.compare(tryPassword, userPassword);
 };
 
-schema.methods.createVerifyToken = async function() {
-    const verifyToken = crypto.randomBytes(32).toString('hex');
-    const hashToken = crypto.createHash('sha256').update(verifyToken).digest('hex');
-    const code = Math.floor(100000 + Math.random() * 900000);
-    this.code = code.toString();
-    this.confirmation = hashToken;
-    this.confirmation_expiration = Date.now() + (5 * 60 * 1000);
+schema.methods.createVerifyToken = async function(): Promise<string> {
+    const token = crypto.randomBytes(16).toString('hex');
+    const hashToken = crypto.createHash('sha256').update(token).digest('hex');
+    this.reset_link_hash = hashToken;
+    this.reset_password_expiration = Date.now() + (5 * 60 * 1000); // 5 minute expiry
     await this.save();
-    return { hashToken, code };
+    return token;
 };
-
-const Users = mongoose.models.Users || model<IUsersDocument>('Users', schema);
+ 
+const Users: Model<IUsersDocument> = mongoose.models.Users || model<IUsersDocument>('Users', schema);
 export default Users;

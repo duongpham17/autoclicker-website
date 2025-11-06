@@ -1,18 +1,13 @@
 import nodemailer from 'nodemailer';
 
-export const email_address = process.env.EMAIL_ADDRESS;
-export const email_password = process.env.EMAIL_PASSWORD;
+export const email_address = process.env.EMAIL_ADDRESS as string;
+export const email_password = process.env.EMAIL_PASSWORD as string;
 
 export const Email = () =>
   nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+    host: 'smtp.gmail.com',
     auth: {
-      user: process.env.EMAIL_ADDRESS,
-      pass: process.env.EMAIL_PASSWORD,
+      user: email_address,
+      pass: email_password,
     },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
+});

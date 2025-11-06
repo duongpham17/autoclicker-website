@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, Types, Document } from 'mongoose';
+import mongoose, { Schema, model, Types, Document, Model } from 'mongoose';
 
 export interface IOrdersApi {
     _id: string | Types.ObjectId,
@@ -31,6 +31,6 @@ const schema = new Schema<IOrdersDocument>({
     },
 });
 
-const Orders = mongoose.models.Orders || model<IOrdersDocument>('Orders', schema);
+const Orders: Model<IOrdersDocument> = mongoose.models.Orders || model<IOrdersDocument>('Orders', schema);
 
 export default Orders;

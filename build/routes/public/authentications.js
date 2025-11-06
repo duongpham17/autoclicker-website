@@ -9,5 +9,6 @@ const router = express_1.default.Router();
 router.get('/load', authentication_1.protect, authentication_1.persist);
 router.post('/login', authentication_1.login);
 router.post('/signup', authentication_1.signup);
-router.post('/code', authentication_1.code);
+router.post('/reset', authentication_1.reset);
+router.post('/forgot', authentication_1.forgot);
 exports.default = router;

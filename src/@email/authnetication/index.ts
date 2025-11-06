@@ -1,37 +1,42 @@
 import { Email, email_address } from '../index';
 import { AUTHENTICATION } from './template';
 
-interface Authentication {
+export interface IAuthentication {
     email: string,
     code: string,
-    host: string
 };
 
-export const EMAIL_SIGNUP = async (data: Authentication) => {
+export const Signup = async (data: IAuthentication) => {
     const transporter = Email();
     const mailOptions = {
         from: `${email_address} <${email_address}>`,
         to: data.email,
         subject: "Confirm Email",
-        html: AUTHENTICATION({
-            host: data.host,
-            code: data.code,
-        })
+        html: AUTHENTICATION(data)
     }
     await transporter.sendMail(mailOptions);
 };
 
-export const EMAIL_LOGIN = async (data: Authentication) => {
+export const Login = async (data: IAuthentication) => {
     const transporter = Email();
 
     const mailOptions = {
         from: `${email_address} <${email_address}>`,
         to: data.email,
         subject: `Login Code: ${data.code}`,
-        html: AUTHENTICATION({
-            code: data.code,
-            host: data.host
-        })
+        html: AUTHENTICATION(data)
+    };
+    await transporter.sendMail(mailOptions);
+};
+
+export const Forgot = async (data: IAuthentication) => {
+    const transporter = Email();
+
+    const mailOptions = {
+        from: `${email_address} <${email_address}>`,
+        to: data.email,
+        subject: `Forgot Password Code`,
+        html: AUTHENTICATION(data)
     };
     await transporter.sendMail(mailOptions);
 };

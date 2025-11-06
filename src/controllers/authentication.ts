@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { EMAIL_SIGNUP, EMAIL_LOGIN } from '../@email/authnetication';
+import { Forgot } from '../@email/authnetication';
 import { asyncBlock, appError } from '../@utils/helper';
 import User, { InjectUserToRequest } from '../models/users';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 export const createSecureToken = (id: string) => {
 
@@ -70,87 +71,15 @@ export const persist = asyncBlock(async (req: InjectUserToRequest, res: Response
 export const login = asyncBlock(async(req: Request, res: Response, next: NextFunction) => {
     const email = req.body.email;
 
-    let user = await User.findOne({email});
+    const user = await User.findOne({email}).select("password");
 
-    if(!user) return next(new appError("failed", 400));
+    if(!user) return next(new appError("No user found, please sign up.", 400));
 
-    const host = req.headers.referer;
-    
-    if(!host) return next(new appError("Host is unknown", 401))
+    const isCorrect = await user.correctPassword(req.body.password, user.password);
 
-    const host_url = host.split("/").slice(0,3).join("/");
+    if(!isCorrect) return next(new appError("Password is incorrect.", 400));
 
-    if(user){
-        const {code} = await user.createVerifyToken();
-    
-        await EMAIL_LOGIN({
-            email: user.email,
-            host: host_url,
-            code,
-        });
-    };
-
-    res.status(200).json({
-        status: "success",
-        message: 'sent'
-    });
-});
-
-export const signup = asyncBlock(async(req: Request, res: Response, next: NextFunction) => {
-    const {email} = req.body;
-
-    let user = await User.findOne({email});
-
-    if(user) return next(new appError("exist", 401));
-
-    const host = req.headers.referer;
-    
-    if(!host) return next(new appError("Host is unknown", 401))
-
-    const host_url = host.split("/").slice(0,3).join("/");
-
-    if(!user){
-        user = await User.create({ ...req.body, email, verified: false });
-
-        const {code} = await user.createVerifyToken();
-    
-        await EMAIL_SIGNUP({
-            email: user.email,
-            host: host_url,
-            code,
-        });
-    };
-
-    res.status(200).json({
-        status: "success",
-        message: 'sent'
-    });
-});
-
-export const code = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
-    const {code, email} = req.body;
-
-    let user = await User.findOne({email}).select('+code');
-
-    if(!user) return next(new appError("User does not exist, signup again", 401));
-
-    const linkExpired = Date.now() > user.confirmation_expiration;
-
-    if(linkExpired) return next(new appError("This confirmation code no longer exist", 401));
-
-    const correctUser = !user || await user.correctPassword(code, user.code);
-
-    if (!correctUser) return next(new appError("Invalid code", 401));
-
-    user = await User.findOneAndUpdate({email}, {
-        $unset: { code: 1, confirmation: 1, link_expiration_time: 1 },
-        $set: { verified: true }, 
-    }, 
-    {new: true});
-    
-    if(!user) return next(new appError("Invalid code", 401));
-
-    const cookie = createSecureToken(user._id as string);
+    const cookie = createSecureToken(user._id.toString());
 
     res.status(200).json({
         status: "success",
@@ -159,36 +88,67 @@ export const code = asyncBlock(async (req: Request, res: Response, next: NextFun
     });
 });
 
-// export const email = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
-//     const token = req.params.token;
+export const signup = asyncBlock(async(req: Request, res: Response, next: NextFunction) => {
+    const {email} = req.body;
 
-//     const [code, confirmation] = token.split("-");
+    const isUserExist = await User.findOne({email});
 
-//     let user = await User.findOne({confirmation}).select('+code');
+    if(isUserExist) return next(new appError("Email already exist.", 401));
 
-//     if(!user) return next(new appError("User does not exist, signup again.", 401));
+    const user = await User.create({ ...req.body, email, verified: false });
+
+    const cookie = createSecureToken(user._id.toString());
+
+    res.status(200).json({
+        status: "success",
+        data: user,
+        cookie
+    });
+});
+
+export const reset = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
+    const {token, password} = req.body;
+
+    const hash = crypto.createHash('sha256').update(token).digest('hex');
+
+    let user = await User.findOne({reset_link_hash: hash}).select("reset_password_expiration");
+
+    if(!user) return next(new appError("Reset password failed, unable to authneticate.", 401));
+
+    const linkExpired = Date.now() > user.reset_password_expiration;
+
+    if(linkExpired) return next(new appError("This confirmation code no longer exist", 401));
+
+    user.password = password;
+    user.reset_link_hash = undefined as any;
+    user.reset_password_expiration = undefined as any;
+
+    await user.save(); 
     
-//     const linkExpired = Date.now() > user.confirmation_expiration;
+    const cookie = createSecureToken(user._id.toString());
 
-//     if(linkExpired) return next(new appError("This confirmation code no longer exist", 401));
+    res.status(200).json({
+        status: "success",
+        data: user,
+        cookie
+    });
+});
 
-//     const correctUser = !user || await user.correctPassword(code, user.code);
+export const forgot = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
+    const {email} = req.body;
 
-//     if (!correctUser) return next(new appError("User does not exist, signup again.", 401));
+    const user = await User.findOne({email});
 
-//     user = await User.findOneAndUpdate({email}, {
-//         $unset: { code: 1, confirmation: 1, link_expiration_time: 1 },
-//         $set: { verified: true }, 
-//     }, 
-//     {new: true});
+    if(!user) return next(new appError("Email does not exist.", 401));
 
-//     if(!user) return next(new appError("User does not exist, signup again.", 401));
+    const token = await user.createVerifyToken();
 
-//     const cookie = createSecureToken(user._id as string);
+    await Forgot({
+        email: user.email,
+        code: token
+    });
 
-//     res.status(200).json({
-//         status: "success",
-//         data: user,
-//         cookie
-//     });
-// });
+    res.status(200).json({
+        status: "success",
+    });
+});
