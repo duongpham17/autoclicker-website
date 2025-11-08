@@ -1,0 +1,40 @@
+.container{
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+
+    .getPaymentBtn{
+        padding: 1rem;
+        background-color: var(--dark);
+        width: 100%;
+        &:hover{
+            background-color: var(--primary);
+        }
+    }
+}
+
+.history{
+    padding: 2rem;
+    overflow-y: auto;
+    height: 100%;
+
+    h3{
+        border-bottom: 1px solid var(--light);
+        padding: 0.5rem 0;
+    }
+    p{
+        font-size: 0.9rem;
+    }
+
+    div{
+        border-bottom: 1px solid var(--light);
+        padding: 0.5rem 0;
+        background-color: var(--dark);
+        margin-bottom: 0.5rem;
+
+        p:nth-child(1){
+            color: var(--text-light);
+        }
+        
+    }
+}

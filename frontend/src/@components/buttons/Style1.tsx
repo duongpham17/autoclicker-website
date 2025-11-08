@@ -1,5 +1,3 @@
-"use client"
-
 import styles from './Style1.module.scss';
 import React, {useState} from 'react';
 
@@ -8,12 +6,12 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     label2?: string | React.ReactNode;
     selected?: boolean,
     loading?: boolean,
-    color?: "red" | "dark" | "light" | "black" | "main" | "blue" | "plain",
+    color?: "primary" | "white" | "black" | "dark" | "light" | "red" | "green",
     margin?: boolean,
     warning?: boolean,
 };
 
-const Button = ({label1, label2, loading, color, selected, margin, warning, ...props}: Props) => {
+const Style1 = ({label1, label2, loading, color, selected, margin, warning, ...props}: Props) => {
 
     const [sure, setSure] = useState(false);
 
@@ -40,8 +38,8 @@ const Button = ({label1, label2, loading, color, selected, margin, warning, ...p
                     </button>   
                 :
                     <div className={styles.warning}>
-                        <button type="button" className={styles.sure} {...props}> SURE </button>
-                        <button type="button" onClick={() => setSure(false)}> EXIT </button>
+                        <button type="button" className={styles.exit} onClick={() => setSure(false)}> Back </button>
+                        <button type="button" className={styles.sure} {...props}> Sure </button>
                     </div>
             :
                 <button type="button" disabled={loading} className={`${styles[color ? color : "default"]} ${selected && styles.selected} ${margin && styles.margin}`} {...props}>
@@ -68,4 +66,4 @@ const Button = ({label1, label2, loading, color, selected, margin, warning, ...p
     )
 }
 
-export default Button
+export default Style1

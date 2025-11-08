@@ -1,4 +1,4 @@
-import Hacked from '@components/animations/hacked';
+import Hacked from '@components/animations/Hacked';
 import styles from './Cookies.module.scss';
 
 const CookiesRoute = () => {

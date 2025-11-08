@@ -2,14 +2,12 @@ import styles from './Style1.module.scss';
 import React from 'react';
 
 interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
-    color?: "dark",
     label1?: string | number, 
     label2?: string | number | React.ReactNode,
     error?: boolean,
-    borderBottom?: boolean
 };
 
-const Input = ({color, label1, label2, error, borderBottom, ...props}:Props) => {
+const Input = ({label1, label2, error, ...props}:Props) => {
     
   return (
     <div className={styles.container}>
@@ -27,7 +25,7 @@ const Input = ({color, label1, label2, error, borderBottom, ...props}:Props) => 
             </p>
         }
 
-        <input {...props} className={`${styles[color ? color : "plain"]} ${borderBottom ? styles.borderBottom : styles.border} ${error ? styles.error : ""}` } />
+        <input {...props} className={error ? styles.error : ""} />
 
     </div>
   )

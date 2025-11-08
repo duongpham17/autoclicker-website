@@ -1,9 +1,11 @@
+import Authentication from './authentication';
 import Title from './title';
 
 const index = () => {
   return (
     <>
-      <Title />
+        <Authentication />
+        <Title />
     </>
   )
 }

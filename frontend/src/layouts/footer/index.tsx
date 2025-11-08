@@ -1,6 +1,6 @@
 import styles from './Footer.module.scss';
 import { Link } from 'react-router-dom';
-import Hacked from '@components/animations/hacked';
+import Hacked from '@components/animations/Hacked';
 
 const Footer = () => {
   return (

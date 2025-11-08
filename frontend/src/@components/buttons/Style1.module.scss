@@ -16,15 +16,17 @@
 .container{
 
     .warning{
-        display: flex;
         button{
-            font-size: 0.8rem;
+            margin: 0.5rem 0;
         }
         .sure{
             background-color: var(--red);
             color: white;
         }
-
+        .exit{
+            background-color: var(--light);
+            color: white;
+        }
     }
     
     button{
@@ -33,11 +35,15 @@
         width: 100%;
         transition: 0.2s ease-in-out;
         border-radius: 5px;
-        background-color: var(--primary);
 
         &:hover{
             opacity: 0.8;
         }
+
+        svg{
+            display: block;
+            align-items: center;
+        }   
         
         .single{
             margin: auto;
@@ -48,26 +54,50 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;    
-            
-            svg, span{
-                display: flex;
-            }
         }
 
         .loading1{
-            @include Loading(15px, 15px, 2px, var(--foreground));
+            @include Loading(15px, 15px, 2px, white);
             margin: auto;
         }
 
         .loading2{
-            @include Loading(15px, 15px, 2px, var(--foreground));
+            @include Loading(15px, 15px, 2px, white);
         }
 
     }
     .selected{
-        border-color: var(--primary);
+        background-color: var(--primary) !important;
     }
     .margin{
         margin-bottom: 0.5rem;
+    }
+    .default{
+        background-color: var(--background);
+    }
+    .white{
+        background-color: white;
+    }
+    .black{
+        background-color: black;
+    }
+    .red{
+        background-color: var(--red);
+        *{color: white;}
+    }
+    .green{
+        background-color: var(--green);
+        *{color: white;}
+    }
+    .dark{
+        background-color: var(--dark);
+        *{color: white;}
+    }
+    .light{
+        background-color: var(--light);
+    }
+    .primary{
+        background-color: var(--primary);
+        *{ color: white;}
     }
 }

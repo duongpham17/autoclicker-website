@@ -1,25 +1,35 @@
 import styles from './Style1.module.scss';
 import React from 'react';
 
-interface Props extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface Props {
   color?: "dark",
   label1?: string | number, 
+  label2?: React.ReactNode, 
+  value?: string | undefined, 
   options: string[],
+  onClick: ((name: string) => void);
 };
 
-const Input = ({label1, options}:Props) => {
+const Style1 = ({label1, label2, options, value, onClick}:Props) => {
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      onClick(e.target.value);
+    };
     
-  return (
-    <div className={styles.container}>
+    return (
+      <div className={styles.container}>
 
-        <p>{label1}</p>
+          <div className={styles.labels}>
+            <p>{label1}</p>
+            {label2}
+          </div>
 
-        <select key={label1} >
+          <select key={label1} onChange={handleChange} value={value}>
             {options.map(el => <option key={el} value={el}>{el}</option>)}
-        </select>
+          </select>
 
-    </div>
+      </div>
   )
 }
 
-export default Input
+export default Style1

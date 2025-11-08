@@ -1,7 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-const reducers = combineReducers({
+import authentications from './authentications';
+import orders from './orders';
 
+const reducers = combineReducers({
+    authentications,
+    orders
 });
 
 export default reducers;

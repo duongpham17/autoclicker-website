@@ -12,7 +12,7 @@ const Hacked = ({text, speed, lowercase, number}: Props) => {
     const [iterations, setIterations] = useState(0);
     const [hackedText, setHackedrTitle] = useState("");
 
-    const type = number ? "0123456789" : "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
+    const type = number ? "0123456789" : "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const letters = lowercase ? type.toLowerCase() : type;
 
     const text_to_string = text.toString();
@@ -23,14 +23,14 @@ const Hacked = ({text, speed, lowercase, number}: Props) => {
 
         const interval = setInterval(() => {
 
-        const title = text_to_string.split("").map((letter, index) => {
-            if (index <= iterations) return text_to_string[index];
-            return letters[Math.floor(Math.random() * 26)];
-        }).join("");
+            const title = text_to_string.split("").map((letter, index) => {
+                if (index <= iterations) return text_to_string[index];
+                return letters[Math.floor(Math.random() * 26)];
+            }).join("");
 
-        setHackedrTitle(title);
+            setHackedrTitle(title);
 
-        setIterations(i => i+(1/2));
+            setIterations(i => i+(1/2));
 
         }, speed || 30);
 

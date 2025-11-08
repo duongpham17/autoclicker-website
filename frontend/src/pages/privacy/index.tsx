@@ -1,6 +1,6 @@
 
 import styles from './Privacy.module.scss';
-import Hacked from '@components/animations/hacked';
+import Hacked from '@components/animations/Hacked';
 
 const PolicyPage = () => {
 
