@@ -3,7 +3,8 @@ import Stripe from 'stripe';
 import { asyncBlock } from '../../@utils/helper';
 import { InjectUserToRequest } from '../../models/users';
 
-const stripe = new Stripe(process.env.STRIPE_TEST_SECRET_KEY as string);
+const secret_key = process.env.ENV === "production" ? process.env.STRIPE_PROD_SECRET_KEY as string : process.env.STRIPE_TEST_SECRET_KEY as string;
+const stripe = new Stripe(secret_key);
 
 export const credit = asyncBlock(async (req: InjectUserToRequest, res: Response, next: NextFunction) => {
 

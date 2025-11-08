@@ -13,8 +13,9 @@ const stripe_1 = __importDefault(require("stripe"));
 const helper_1 = require("../../@utils/helper");
 const users_1 = __importDefault(require("../../models/users"));
 const orders_1 = __importDefault(require("../../models/orders"));
-const stripe = new stripe_1.default(process.env.STRIPE_TEST_SECRET_KEY);
-const endpointSecret = process.env.STRIPE_TEST_WEBHOOK_SECRET;
+const secret_key = process.env.ENV === "production" ? process.env.STRIPE_PROD_SECRET_KEY : process.env.STRIPE_TEST_SECRET_KEY;
+const endpointSecret = process.env.ENV === "production" ? process.env.STRIPE_PROD_WEBHOOK_SECRET : process.env.STRIPE_TEST_WEBHOOK_SECRET;
+const stripe = new stripe_1.default(secret_key);
 exports.paymentIntent = (0, helper_1.asyncBlock)(async (req, res, next) => {
     const sig = req.headers['stripe-signature'];
     let event;

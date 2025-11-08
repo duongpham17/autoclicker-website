@@ -8,7 +8,8 @@ exports.corsPublic = exports.corsPrivate = void 0;
 const cors_1 = __importDefault(require("cors"));
 const production_url = [
     "https://autoclicker-f60h.onrender.com",
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'null'
 ];
 const development_url = [
     'http://localhost:3000'

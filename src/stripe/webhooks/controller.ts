@@ -10,8 +10,9 @@ import { asyncBlock } from '../../@utils/helper';
 import Users from '../../models/users';
 import Orders from '../../models/orders';
 
-const stripe = new Stripe(process.env.STRIPE_TEST_SECRET_KEY as string);
-const endpointSecret = process.env.STRIPE_TEST_WEBHOOK_SECRET as string;
+const secret_key = process.env.ENV === "production" ? process.env.STRIPE_PROD_SECRET_KEY as string : process.env.STRIPE_TEST_SECRET_KEY as string;
+const endpointSecret = process.env.ENV === "production" ? process.env.STRIPE_PROD_WEBHOOK_SECRET  as string : process.env.STRIPE_TEST_WEBHOOK_SECRET  as string;
+const stripe = new Stripe(secret_key);
 
 export const paymentIntent = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
   
