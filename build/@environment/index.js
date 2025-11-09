@@ -6,6 +6,7 @@ exports.website = {
 };
 exports.production_url = [
     "https://autoclicker-f60h.onrender.com",
+    "https://theautoclicker.com",
     'http://localhost:3000',
     'null'
 ];
