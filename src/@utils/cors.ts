@@ -1,15 +1,6 @@
 // cors.ts (backend CORS middleware setup)
 import cors from 'cors';
-
-const production_url: string[] = [
-  "https://autoclicker-f60h.onrender.com",
-  'http://localhost:3000',
-  'null'
-];
-
-const development_url: string[] = [
-  'http://localhost:3000'
-];
+import { development_url, production_url } from '../@environment';
 
 const whitelist: string[] = process.env.NODE_ENV === 'development' ? development_url : production_url;
 

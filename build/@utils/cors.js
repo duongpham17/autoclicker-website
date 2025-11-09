@@ -6,15 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.corsPublic = exports.corsPrivate = void 0;
 // cors.ts (backend CORS middleware setup)
 const cors_1 = __importDefault(require("cors"));
-const production_url = [
-    "https://autoclicker-f60h.onrender.com",
-    'http://localhost:3000',
-    'null'
-];
-const development_url = [
-    'http://localhost:3000'
-];
-const whitelist = process.env.NODE_ENV === 'development' ? development_url : production_url;
+const _environment_1 = require("../@environment");
+const whitelist = process.env.NODE_ENV === 'development' ? _environment_1.development_url : _environment_1.production_url;
 exports.corsPrivate = (0, cors_1.default)({
     origin: (origin, callback) => {
         if (!origin || whitelist.includes(origin)) {

@@ -1,13 +1,27 @@
 import styles from './Home.module.scss';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { useAppSelector } from '@redux/hooks/useRedux';
 import { Link } from 'react-router-dom';
-import Hacked from '@components/animations/Hacked';
+import { dmg_github_links } from 'environment';
 import { FaApple, FaWindows } from "react-icons/fa";
+import Hacked from '@components/animations/Hacked';
 
 const Home = () => {
 
   const {user} = useAppSelector(state => state.authentications);
+
+  const [loading, setLoading] = useState(false);
+
+  const onDownload = async (link: string) => {
+    setLoading(true);
+    const a = document.createElement("a");
+    a.href = link;
+    a.download = "autoclicker.dmg";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => setLoading(false), 5000)
+  };
 
   return (
     <div className={styles.container}>
@@ -35,8 +49,20 @@ const Home = () => {
       <section className={styles.downloads} id="download">
         <div>
           <h1><Hacked text="Downloads"/></h1>
-          <button><FaApple/></button>
-          <button><FaWindows/></button>
+          <div>
+            <button 
+              className={loading ? styles.loading : ""} 
+              onClick={() => onDownload(dmg_github_links.mac)} 
+              disabled={loading}>
+                <FaApple/>
+            </button>
+            <button 
+              className={loading ? styles.loading : ""} 
+              onClick={() => onDownload(dmg_github_links.win)} 
+              disabled={loading}>
+                <FaWindows/>
+            </button>
+          </div>
         </div>
       </section>
 

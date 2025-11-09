@@ -24,6 +24,10 @@ const PolicyPage = () => {
         {
             title: "Date Sharing",
             message: `We do not sell or share your personal information with third parties except as necessary to comply with payment processing and legal obligations.`
+        },
+        {
+            title: "Desktop App",
+            message: "The application will require access to your privacy and secuirty. It will require access to moving mouse and clicking your mouse. It will also require access to moving the mouse around the screen."
         }
     ]
 
