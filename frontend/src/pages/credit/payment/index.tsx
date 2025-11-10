@@ -42,8 +42,7 @@ const CheckoutForm = ({clientSecret}: {clientSecret: string}) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <br/>
+      <PaymentElement /><br/>
       <Button label1="Pay" disabled={!stripe} type='submit' color='primary' loading={loading} />
     </form>
   );

@@ -4,7 +4,6 @@ export const website = {
 
 export const production_url: string[] = [
   "https://autoclicker-f60h.onrender.com",
-  "https://theautoclicker.com",
   "https://www.theautoclicker.com",
   'null' //electron file application
 ];

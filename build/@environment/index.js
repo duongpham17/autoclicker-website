@@ -6,7 +6,6 @@ exports.website = {
 };
 exports.production_url = [
     "https://autoclicker-f60h.onrender.com",
-    "https://theautoclicker.com",
     "https://www.theautoclicker.com",
     'null' //electron file application
 ];

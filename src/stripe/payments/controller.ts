@@ -15,7 +15,7 @@ export const credit = asyncBlock(async (req: InjectUserToRequest, res: Response,
   }
 
   const paymentIntent = await stripe.paymentIntents.create({
-    payment_method_types: ['card'],
+    automatic_payment_methods: { enabled: true},
     amount: Number(credit) * 200,
     currency: 'gbp',
     metadata: {

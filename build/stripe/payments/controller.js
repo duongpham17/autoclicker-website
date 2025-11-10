@@ -14,7 +14,7 @@ exports.credit = (0, helper_1.asyncBlock)(async (req, res, next) => {
         return res.status(400).json({ status: 'fail', message: 'Invalid credit amount' });
     }
     const paymentIntent = await stripe.paymentIntents.create({
-        payment_method_types: ['card'],
+        automatic_payment_methods: { enabled: true },
         amount: Number(credit) * 200,
         currency: 'gbp',
         metadata: {
