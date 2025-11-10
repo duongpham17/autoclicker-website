@@ -7,7 +7,6 @@ import { api } from '@redux/api';
 import Button from '@components/buttons/Style1';
 
 const stripe_key = stripe_publishable_key[environment];
-console.log(stripe_key);
 
 const CheckoutForm = ({clientSecret}: {clientSecret: string}) => {
   const [loading, setLoading] = useState(false);
