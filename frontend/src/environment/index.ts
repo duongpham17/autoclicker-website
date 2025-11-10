@@ -22,5 +22,5 @@ export const stripe_publishable =  {
 
 export const dmg_github_links = {
     mac: "https://github.com/duongpham17/autoclicker-application/releases/download/1.0.0/autoclicker-1.0.0-arm64.dmg",
-    win: "",
+    win: "https://github.com/duongpham17/autoclicker-application-window/releases/download/1.0.0/Autoclicker.1.0.0.exe",
 }
