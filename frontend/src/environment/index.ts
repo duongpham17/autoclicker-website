@@ -6,12 +6,12 @@ export const website = {
 };
 
 export const base_url_api =  {
-    production: "https://theautoclicker.com/api",
+    production: "https://www.theautoclicker.com/api",
     development: "http://localhost:8000/api"
 };
 
 export const base_url_frontend = {
-    production: "https://theautoclicker.com",
+    production: "https://www.theautoclicker.com",
     development: "http://localhost:3000"
 };
 
