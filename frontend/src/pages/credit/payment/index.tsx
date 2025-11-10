@@ -57,6 +57,7 @@ const Payment = () => {
     try{
       setSelected(credit);
       const res = await api.post('/stripe/credit', {credit});
+      console.log(res.data.clientSecret);
       setClientSecret(res.data.clientSecret as string);
     } catch(err){
       console.log(err);
