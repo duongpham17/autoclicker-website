@@ -7,7 +7,7 @@ exports.corsPublic = exports.corsPrivate = void 0;
 // cors.ts (backend CORS middleware setup)
 const cors_1 = __importDefault(require("cors"));
 const _environment_1 = require("../@environment");
-const whitelist = process.env.NODE_ENV === 'development' ? _environment_1.development_url : _environment_1.production_url;
+const whitelist = process.env.NODE_ENV === 'production' ? _environment_1.production_url : _environment_1.development_url;
 exports.corsPrivate = (0, cors_1.default)({
     origin: (origin, callback) => {
         if (!origin || whitelist.includes(origin)) {
