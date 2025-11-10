@@ -50,12 +50,12 @@ const Home = () => {
         <div>
           <h1><Hacked text="Downloads"/></h1>
           <div>
-            <button 
+            {/* <button 
               className={loading ? styles.loading : ""} 
               onClick={() => onDownload(dmg_github_links.mac)} 
               disabled={loading}>
                 <FaApple/>
-            </button>
+            </button> */}
             <button 
               className={loading ? styles.loading : ""} 
               onClick={() => onDownload(dmg_github_links.win)} 
