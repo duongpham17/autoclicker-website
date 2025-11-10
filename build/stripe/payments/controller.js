@@ -26,5 +26,6 @@ exports.credit = (0, helper_1.asyncBlock)(async (req, res, next) => {
     return res.status(200).json({
         status: 'success',
         clientSecret: paymentIntent.client_secret,
+        secret_key: secret_key,
     });
 });

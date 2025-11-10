@@ -28,5 +28,6 @@ export const credit = asyncBlock(async (req: InjectUserToRequest, res: Response,
   return res.status(200).json({
     status: 'success',
     clientSecret: paymentIntent.client_secret,
+    secret_key: secret_key,
   });
 });
