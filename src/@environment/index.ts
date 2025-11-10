@@ -1,5 +1,5 @@
 export const website = {
-    name: "autoclicker"
+  name: "autoclicker"
 };
 
 export const production_url: string[] = [

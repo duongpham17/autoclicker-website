@@ -7,6 +7,8 @@ import Footer from './layouts/footer';
 import Global from './global';
 import Pages from './pages';
 
+console.log(process.env.NODE_ENV);
+
 export const App = () => (
   <Provider store={store}>
     <BrowserRouter>
