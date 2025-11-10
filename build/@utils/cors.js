@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.corsPreflight = exports.corsPublic = exports.corsPrivate = void 0;
-// cors.ts
 const cors_1 = __importDefault(require("cors"));
 const _environment_1 = require("../@environment");
 const whitelist = process.env.NODE_ENV === 'development' ? _environment_1.development_url : _environment_1.production_url;
@@ -12,17 +11,15 @@ const whitelist = process.env.NODE_ENV === 'development' ? _environment_1.develo
  * Check if the origin is allowed based on the whitelist
  */
 const originChecker = (origin, callback) => {
-    if (!origin || whitelist.includes(origin)) {
-        // Allow requests with no origin (like mobile apps, curl, or server-side)
-        callback(null, true);
+    if (!origin || origin === 'null' || whitelist.includes(origin)) {
+        callback(null, true); // allow Electron, curl, server-side
     }
     else {
         callback(new Error('Not allowed by CORS'));
     }
 };
 /**
- * Private CORS middleware (for authenticated routes)
- * Allows only whitelisted origins, supports credentials, and handles preflight
+ * Private CORS middleware (authenticated routes)
  */
 exports.corsPrivate = (0, cors_1.default)({
     origin: originChecker,
@@ -38,16 +35,17 @@ exports.corsPrivate = (0, cors_1.default)({
     credentials: true, // allow cookies/credentials
 });
 /**
- * Public CORS middleware (for GET and login POST routes)
- * Allows all origins, handles preflight requests
+ * Public CORS middleware (login routes)
  */
 exports.corsPublic = (0, cors_1.default)({
-    origin: (origin, callback) => callback(null, true),
+    origin: originChecker, // explicitly allow whitelist & Electron
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept'],
     credentials: false,
 });
-// Preflight handler for all routes
+/**
+ * Preflight handler for all routes
+ */
 const corsPreflight = (req, res, next) => {
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');

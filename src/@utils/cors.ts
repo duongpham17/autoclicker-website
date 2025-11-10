@@ -1,23 +1,21 @@
-// cors.ts
 import cors from 'cors';
 import { development_url, production_url } from '../@environment';
+
 const whitelist: string[] = process.env.NODE_ENV === 'development' ? development_url : production_url;
 
 /**
  * Check if the origin is allowed based on the whitelist
  */
 const originChecker = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-  if (!origin || whitelist.includes(origin)) {
-    // Allow requests with no origin (like mobile apps, curl, or server-side)
-    callback(null, true);
+  if (!origin || origin === 'null' || whitelist.includes(origin)) {
+    callback(null, true); // allow Electron, curl, server-side
   } else {
     callback(new Error('Not allowed by CORS'));
   }
 };
 
 /**
- * Private CORS middleware (for authenticated routes)
- * Allows only whitelisted origins, supports credentials, and handles preflight
+ * Private CORS middleware (authenticated routes)
  */
 export const corsPrivate = cors({
   origin: originChecker,
@@ -34,17 +32,18 @@ export const corsPrivate = cors({
 });
 
 /**
- * Public CORS middleware (for GET and login POST routes)
- * Allows all origins, handles preflight requests
+ * Public CORS middleware (login routes)
  */
 export const corsPublic = cors({
-  origin: (origin, callback) => callback(null, true),
+  origin: originChecker, // explicitly allow whitelist & Electron
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'Accept'],
   credentials: false,
 });
 
-// Preflight handler for all routes
+/**
+ * Preflight handler for all routes
+ */
 export const corsPreflight = (req: any, res: any, next: any) => {
   if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
