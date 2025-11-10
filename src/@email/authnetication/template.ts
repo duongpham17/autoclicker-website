@@ -8,7 +8,7 @@ export const AUTHENTICATION = ({code}: IAuthentication) => `
             <tr>
                 <th>            
                     <h1 style="text-align:left; font-size: 1rem;">
-                        <p style="text-decoration: none;color: black">${website.name} ( Authentication )</p>
+                        <p style="text-decoration: none;color: black">${website.Name} ( Authentication )</p>
                     </h1>
                 </th>
             </tr>

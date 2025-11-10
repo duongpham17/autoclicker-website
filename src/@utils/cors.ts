@@ -1,8 +1,6 @@
 // cors.ts (backend CORS middleware setup)
 import cors from 'cors';
-import { development_url, production_url } from '../@environment';
-
-const whitelist: string[] = process.env.NODE_ENV === 'production' ? production_url : development_url;
+import { whitelist } from '../@environment';
 
 export const corsPrivate = cors({
   origin: (origin, callback) => {

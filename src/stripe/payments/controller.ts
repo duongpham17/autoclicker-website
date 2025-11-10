@@ -1,10 +1,10 @@
 import { NextFunction, Response } from 'express';
 import Stripe from 'stripe';
+import { stripe_key } from '../../@environment';
 import { asyncBlock } from '../../@utils/helper';
 import { InjectUserToRequest } from '../../models/users';
 
-const secret_key = process.env.ENV === "production" ? process.env.STRIPE_PROD_SECRET_KEY as string : process.env.STRIPE_TEST_SECRET_KEY as string;
-const stripe = new Stripe(secret_key);
+const stripe = new Stripe(stripe_key.key);
 
 export const credit = asyncBlock(async (req: InjectUserToRequest, res: Response, next: NextFunction) => {
 
@@ -28,6 +28,5 @@ export const credit = asyncBlock(async (req: InjectUserToRequest, res: Response,
   return res.status(200).json({
     status: 'success',
     clientSecret: paymentIntent.client_secret,
-    secret_key: secret_key,
   });
 });

@@ -7,12 +7,11 @@
 import Stripe from 'stripe';
 import { NextFunction, Request, Response } from 'express';
 import { asyncBlock } from '../../@utils/helper';
+import { stripe_key } from '../../@environment';
 import Users from '../../models/users';
 import Orders from '../../models/orders';
 
-const secret_key = process.env.ENV === "production" ? process.env.STRIPE_PROD_SECRET_KEY as string : process.env.STRIPE_TEST_SECRET_KEY as string;
-const endpointSecret = process.env.ENV === "production" ? process.env.STRIPE_PROD_WEBHOOK_SECRET  as string : process.env.STRIPE_TEST_WEBHOOK_SECRET  as string;
-const stripe = new Stripe(secret_key);
+const stripe = new Stripe(stripe_key.key);
 
 export const paymentIntent = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
   
@@ -21,7 +20,7 @@ export const paymentIntent = asyncBlock(async (req: Request, res: Response, next
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(req.body, sig as string, endpointSecret);
+        event = stripe.webhooks.constructEvent(req.body, sig as string, stripe_key.webhook_paymentIntent);
     } catch (err: any) {
         console.error('Webhook signature verification failed:', err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);

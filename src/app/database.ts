@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { mongodb } from '../@environment';
 
 const database = async () => {
   try {
@@ -7,9 +8,7 @@ const database = async () => {
       return;
     }
 
-    const database = process.env.DATABASE as string;
-    const databasePassword = process.env.DATABASE_PASSWORD as string;
-    const dbUri = database.replace('<password>', encodeURIComponent(databasePassword));
+    const dbUri = mongodb.database.replace('<password>', encodeURIComponent(mongodb.password));
 
     mongoose.set('strictQuery', true);
 

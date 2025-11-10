@@ -9,7 +9,7 @@ const AUTHENTICATION = ({ code }) => `
             <tr>
                 <th>            
                     <h1 style="text-align:left; font-size: 1rem;">
-                        <p style="text-decoration: none;color: black">${_environment_1.website.name} ( Authentication )</p>
+                        <p style="text-decoration: none;color: black">${_environment_1.website.Name} ( Authentication )</p>
                     </h1>
                 </th>
             </tr>
