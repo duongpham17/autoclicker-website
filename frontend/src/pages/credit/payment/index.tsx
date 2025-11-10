@@ -1,13 +1,13 @@
 import styles from './Payment.module.scss';
 import React, { useState } from 'react';
-import { environment, stripe_publishable, base_url_frontend} from 'environment';
+import { environment, stripe_publishable_key, base_url_frontend} from 'environment';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { api } from '@redux/api';
 import Button from '@components/buttons/Style1';
 
-const Publishable_stripe_key = stripe_publishable[environment];
-const stripePromise = loadStripe(Publishable_stripe_key);
+const stripe_key = stripe_publishable_key[environment];
+console.log(stripe_key);
 
 const CheckoutForm = ({clientSecret}: {clientSecret: string}) => {
   const [loading, setLoading] = useState(false);
@@ -83,7 +83,7 @@ const Payment = () => {
       </div>
 
       {clientSecret && (
-        <Elements stripe={stripePromise} options={options}>
+        <Elements key={clientSecret} stripe={loadStripe(stripe_key)} options={options}>
           <CheckoutForm clientSecret={clientSecret} />
         </Elements>
       )}
