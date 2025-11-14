@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react';
 import { useAppSelector } from '@redux/hooks/useRedux';
 import { Link } from 'react-router-dom';
 import { dmg_github_links } from 'environment';
-import { FaApple, FaWindows } from "react-icons/fa";
+import { FaWindows } from "react-icons/fa";
 import Hacked from '@components/animations/Hacked';
 
 const Home = () => {
@@ -27,7 +27,7 @@ const Home = () => {
     <div className={styles.container}>
 
       <section className={styles.image} id="image">
-        <img src="/logo.png" alt="logo"/>
+        <Link to="/starting"><img src="/logo.png" alt="logo"/></Link>
       </section>
 
       <section className={styles.credits} id="credits">
@@ -49,20 +49,12 @@ const Home = () => {
       <section className={styles.downloads} id="download">
         <div>
           <h1><Hacked text="Downloads"/></h1>
-          <div>
-            {/* <button 
-              className={loading ? styles.loading : ""} 
-              onClick={() => onDownload(dmg_github_links.mac)} 
-              disabled={loading}>
-                <FaApple/>
-            </button> */}
             <button 
               className={loading ? styles.loading : ""} 
               onClick={() => onDownload(dmg_github_links.win)} 
               disabled={loading}>
                 <FaWindows/>
             </button>
-          </div>
         </div>
       </section>
 

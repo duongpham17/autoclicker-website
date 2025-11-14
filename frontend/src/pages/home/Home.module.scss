@@ -30,9 +30,8 @@
     }
 
     .downloads{
-        div:nth-child(2){
-            display: flex;
-            align-items: center;
+        div{
+            text-align: center;
         }
         svg{
             font-size: 4rem;
@@ -40,7 +39,8 @@
         }
         button{
             padding: 1rem;
-            margin: 1rem;
+            justify-content: center;
+            margin: 1rem auto;
             background-color: var(--dark);
             &:hover{
                 opacity: 0.8;

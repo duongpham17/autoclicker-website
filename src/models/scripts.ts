@@ -22,12 +22,14 @@ export interface IScriptsCommands {
     event?: string,
     click?: string,
     toggle?: string,
+    xyrange?: number,
     x?: number,
     y?: number,
     pixel_event?: string,
     pixel_color?: string,
     pixel_x?: number,
     pixel_y?: number,
+    pixel_wait?: number
 };
 
 export interface IScriptsDocument extends Document, IScriptsApi {
@@ -61,12 +63,14 @@ const schema = new Schema<IScriptsDocument>({
         type: { type: String },
         click: { type: String },
         toggle: {type: String},
+        xyrange: {type: Number},
         x: { type: Number },
         y: { type: Number },
         pixel_event: { type: String },
         pixel_color: { type: String },
         pixel_x: { type: Number },
         pixel_y: { type: Number },
+        pixel_wait: {type: Number}
     }],
     usedAt: {
         type: Number,

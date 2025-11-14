@@ -7,7 +7,6 @@ export interface IUsersApi {
     _id: string | Types.ObjectId,
     email: string,
     role: "user" | "admin",
-    verified: boolean,
     credit: number,
     password: string,
     reset_password_expiration: number,

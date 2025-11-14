@@ -11,5 +11,6 @@ router.use(authentication_1.protect, (0, authentication_1.restrict)(["admin", "u
 router.get('/', users_1.find);
 router.post('/', users_1.create);
 router.patch('/', users_1.update);
-router.delete('/:id', users_1.remove);
+router.delete('/', users_1.remove);
+router.patch('/password', users_1.password);
 exports.default = router;

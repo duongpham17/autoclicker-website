@@ -72,11 +72,11 @@ const Payment = () => {
       <div className={styles.credits}>
         <h2>Buy Credit</h2>
         <div>
-          <button onClick={() => onSelectCredit(1)} className={selected===1?styles.selected:""}> 1 = £2</button>
-          <button onClick={() => onSelectCredit(2)} className={selected===2?styles.selected:""}> 2 = £4</button>
-          <button onClick={() => onSelectCredit(3)} className={selected===3?styles.selected:""}> 3 = £6</button>
-          <button onClick={() => onSelectCredit(4)} className={selected===4?styles.selected:""}> 4 = £8</button>
-          <button onClick={() => onSelectCredit(5)} className={selected===5?styles.selected:""}> 5 = £10</button>
+          <button onClick={() => onSelectCredit(1)} className={selected===1?styles.selected:""}> 1 = £5</button>
+          <button onClick={() => onSelectCredit(2)} className={selected===2?styles.selected:""}> 2 = £10</button>
+          <button onClick={() => onSelectCredit(3)} className={selected===3?styles.selected:""}> 3 = £15</button>
+          <button onClick={() => onSelectCredit(4)} className={selected===4?styles.selected:""}> 4 = £20</button>
+          <button onClick={() => onSelectCredit(5)} className={selected===5?styles.selected:""}> 5 = £25</button>
         </div>
       </div>
 

@@ -64,12 +64,14 @@ const schema = new mongoose_1.Schema({
             type: { type: String },
             click: { type: String },
             toggle: { type: String },
+            xyrange: { type: Number },
             x: { type: Number },
             y: { type: Number },
             pixel_event: { type: String },
             pixel_color: { type: String },
             pixel_x: { type: Number },
             pixel_y: { type: Number },
+            pixel_wait: { type: Number }
         }],
     usedAt: {
         type: Number,
