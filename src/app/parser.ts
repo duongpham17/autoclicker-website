@@ -1,14 +1,15 @@
-import {Express} from 'express';
-import cookie from 'cookie-parser';
+import express, { Express } from 'express'; // import express itself and the type
+import cookieParser from 'cookie-parser';
 
-const parser = (app: Express, express: any): void => {
-
+const parser = (app: Express): void => {
+    // Parse JSON bodies up to 100kb
     app.use(express.json({ limit: '100kb' }));
 
-    app.use(express.urlencoded({extended: true}));
+    // Parse URL-encoded bodies (form submissions)
+    app.use(express.urlencoded({ extended: true }));
 
-    app.use(cookie());
-
+    // Parse cookies from incoming requests
+    app.use(cookieParser());
 };
 
 export default parser;

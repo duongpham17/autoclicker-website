@@ -47,6 +47,10 @@ const schema = new mongoose_1.Schema({
         trim: true,
         lowercase: true,
     },
+    private: {
+        type: Boolean,
+        default: true
+    },
     description: {
         type: String
     },

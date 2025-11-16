@@ -15,7 +15,7 @@ const app = (0, express_1.default)();
 exports.default = () => {
     (0, security_1.default)(app);
     (0, webhooks_1.default)(app);
-    (0, parser_1.default)(app, express_1.default);
+    (0, parser_1.default)(app);
     (0, routes_1.default)(app);
     (0, database_1.default)();
     (0, frontend_1.default)(app, express_1.default);

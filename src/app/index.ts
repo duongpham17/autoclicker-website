@@ -15,7 +15,7 @@ export default (): void => {
 
     webhooks(app);
 
-    parser(app, express);
+    parser(app);
 
     routes(app);
 

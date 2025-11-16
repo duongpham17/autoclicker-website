@@ -7,6 +7,7 @@ export interface IScriptsApi {
     max_loop: number,
     commands: IScriptsCommands[],
     description: string,
+    private: boolean,
     usedAt: number,
     createdAt: number,
 };
@@ -45,6 +46,10 @@ const schema = new Schema<IScriptsDocument>({
         type: String,
         trim: true,
         lowercase: true,
+    },
+    private: {
+        type: Boolean,
+        default: true
     },
     description: {
         type: String
