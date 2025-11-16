@@ -36,7 +36,15 @@ const sanitizeInputMiddleware = (req: Request, res: Response, next: NextFunction
 };
 
 const security = (app: Express) => {
-    app.use(helmet());                // helmet: sets HTTP headers for basic security
+    app.use(
+        helmet.contentSecurityPolicy({
+            useDefaults: true,
+            directives: {
+                defaultSrc: ["'self'", 'file:'],
+                scriptSrc: ["'self'", "'unsafe-inline'", 'file:'],
+            },
+        })
+    ); // helmet: sets HTTP headers for basic security
     app.use(hpp());                   // hpp: prevents HTTP parameter pollution
     app.use(mongoSanitize());         // mongoSanitize: removes MongoDB operators from user input
     app.use(rateLimitMiddleware);     // rateLimitMiddleware: limits request rate per IP
