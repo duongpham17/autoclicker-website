@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const rate_limiter_flexible_1 = __importDefault(require("rate-limiter-flexible"));
+const rate_limiter_flexible_1 = require("rate-limiter-flexible");
 const express_mongo_sanitize_1 = __importDefault(require("express-mongo-sanitize"));
 const validator_1 = __importDefault(require("validator"));
 const helmet_1 = __importDefault(require("helmet"));
@@ -12,10 +12,9 @@ const hpp_1 = __importDefault(require("hpp"));
  * Middleware to limit repeated requests from the same IP.
  * Allows 100 requests per 60 seconds per IP.
  */
+const rateLimiter = new rate_limiter_flexible_1.RateLimiterMemory({ points: 100, duration: 60 });
 const rateLimitMiddleware = async (req, res, next) => {
     try {
-        const { RateLimiterMemory } = rate_limiter_flexible_1.default;
-        const rateLimiter = new RateLimiterMemory({ points: 100, duration: 60 });
         await rateLimiter.consume(req.ip);
         next();
     }
@@ -37,14 +36,23 @@ const sanitizeInputMiddleware = (req, res, next) => {
     }
     next();
 };
-const security = (app) => {
-    app.use(helmet_1.default.contentSecurityPolicy({
+/**
+ * Middleware to set secure HTTP headers using Helmet.
+ * Protects against common web vulnerabilities such as XSS, clickjacking, and MIME-type sniffing.
+ * Customizes the Content-Security-Policy to allow Electron's file:// origin and inline scripts.
+ */
+const helmetContents = () => {
+    return helmet_1.default.contentSecurityPolicy({
         useDefaults: true,
         directives: {
             defaultSrc: ["'self'", 'file:'],
-            scriptSrc: ["'self'", "'unsafe-inline'", 'file:'],
+            scriptSrc: ["'self'", "'unsafe-inline'", 'file:', 'https://js.stripe.com'],
+            connectSrc: ["'self'", 'https://api.stripe.com']
         },
-    })); // helmet: sets HTTP headers for basic security
+    });
+};
+const security = (app) => {
+    app.use(helmetContents()); // helmet: sets HTTP headers for basic security
     app.use((0, hpp_1.default)()); // hpp: prevents HTTP parameter pollution
     app.use((0, express_mongo_sanitize_1.default)()); // mongoSanitize: removes MongoDB operators from user input
     app.use(rateLimitMiddleware); // rateLimitMiddleware: limits request rate per IP
