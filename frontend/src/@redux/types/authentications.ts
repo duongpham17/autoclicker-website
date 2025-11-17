@@ -6,12 +6,12 @@ export interface ResponseType {
 };
 
 export interface IAuthenticationsSignup {
-    email: string,
+    username: string,
     password: string,
 };
 
 export interface IAuthenticationsLogin {
-    email: string,
+    username: string,
     password: string,
 };
 

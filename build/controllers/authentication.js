@@ -40,7 +40,7 @@ exports.protect = (0, helper_1.asyncBlock)(async (req, res, next) => {
         return next(new helper_1.appError('Login to access these features', 401));
     const jwt_secret = process.env.JWT_SECRET;
     const decodedId = jsonwebtoken_1.default.verify(token, jwt_secret);
-    const existingUser = await users_1.default.findById(decodedId.id).select('role credit email');
+    const existingUser = await users_1.default.findById(decodedId.id).select('role credit user email');
     if (!existingUser)
         return next(new helper_1.appError('The user belonging to this token does not exist.', 401));
     req.user = existingUser;
@@ -57,8 +57,16 @@ exports.persist = (0, helper_1.asyncBlock)(async (req, res, next) => {
     });
 });
 exports.login = (0, helper_1.asyncBlock)(async (req, res, next) => {
-    const email = req.body.email;
-    const user = await users_1.default.findOne({ email }).select("password");
+    const { username } = req.body;
+    const isEmail = username.includes("@");
+    let user;
+    if (isEmail) {
+        user = await users_1.default.findOne({ email: username }).select("password");
+    }
+    else {
+        user = await users_1.default.findOne({ username }).select("password");
+    }
+    ;
     if (!user)
         return next(new helper_1.appError("No user found, please sign up.", 400));
     const isCorrect = await user.correctPassword(req.body.password, user.password);
@@ -72,11 +80,11 @@ exports.login = (0, helper_1.asyncBlock)(async (req, res, next) => {
     });
 });
 exports.signup = (0, helper_1.asyncBlock)(async (req, res, next) => {
-    const { email } = req.body;
-    const isUserExist = await users_1.default.findOne({ email });
+    const { username } = req.body;
+    const isUserExist = await users_1.default.findOne({ username });
     if (isUserExist)
-        return next(new helper_1.appError("Email already exist.", 401));
-    const user = await users_1.default.create({ ...req.body, email, verified: false });
+        return next(new helper_1.appError("Username taken.", 401));
+    const user = await users_1.default.create({ ...req.body, username, verified: false });
     const cookie = (0, exports.createSecureToken)(user._id.toString());
     res.status(200).json({
         status: "success",

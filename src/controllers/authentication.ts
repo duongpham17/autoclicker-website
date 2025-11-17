@@ -45,7 +45,7 @@ export const protect = asyncBlock(async(req: InjectUserToRequest, res: Response,
 
     const decodedId:any = jwt.verify(token, jwt_secret);
 
-    const existingUser = await User.findById(decodedId.id).select('role credit email');
+    const existingUser = await User.findById(decodedId.id).select('role credit user email');
 
     if(!existingUser) return next(new appError('The user belonging to this token does not exist.', 401));
 
@@ -69,9 +69,17 @@ export const persist = asyncBlock(async (req: InjectUserToRequest, res: Response
 });
 
 export const login = asyncBlock(async(req: Request, res: Response, next: NextFunction) => {
-    const email = req.body.email;
+    const {username} = req.body;
+    
+    const isEmail = username.includes("@");
 
-    const user = await User.findOne({email}).select("password");
+    let user; 
+
+    if(isEmail){
+        user = await User.findOne({email: username}).select("password");
+    } else {
+        user = await User.findOne({username}).select("password");
+    };
 
     if(!user) return next(new appError("No user found, please sign up.", 400));
 
@@ -89,13 +97,13 @@ export const login = asyncBlock(async(req: Request, res: Response, next: NextFun
 });
 
 export const signup = asyncBlock(async(req: Request, res: Response, next: NextFunction) => {
-    const {email} = req.body;
+    const {username} = req.body;
 
-    const isUserExist = await User.findOne({email});
+    const isUserExist = await User.findOne({username});
 
-    if(isUserExist) return next(new appError("Email already exist.", 401));
+    if(isUserExist) return next(new appError("Username taken.", 401));
 
-    const user = await User.create({ ...req.body, email, verified: false });
+    const user = await User.create({ ...req.body, username, verified: false });
 
     const cookie = createSecureToken(user._id.toString());
 

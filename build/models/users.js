@@ -43,11 +43,15 @@ const crypto_1 = __importDefault(require("crypto"));
 ;
 ;
 const schema = new mongoose_1.Schema({
+    username: {
+        type: String,
+        trim: true,
+        lowercase: true,
+    },
     email: {
         type: String,
         trim: true,
         lowercase: true,
-        unique: true
     },
     role: {
         type: String,

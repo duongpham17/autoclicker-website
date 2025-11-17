@@ -8,7 +8,7 @@ import Text from '@components/texts/Style1';
 import Form from '@components/forms/Style1';
 
 interface Validation {
-  email?: string,
+  username?: string,
   password?: string,
 }
 
@@ -17,14 +17,15 @@ const validation = (values: Validation) => {
 
     const check = (key: any) => key in values;
 
-    if(check("email")){
-      if(!values.email) {
-        errors.email = "required";
-      }
-      else if(!/\S+@\S+\.\S+/.test(values.email)){
-        errors.email = "Invalid email address"
-      }
+    if (check("username")) {
+      if (!values.username) {
+        errors.username = "required";
+      } 
+      else if (values.username.length < 3) {
+        errors.username = "Must be at least 3 characters";
+      } 
     }
+
     return errors
 }
 
@@ -34,7 +35,7 @@ const Signin = () => {
 
     const {errors} = useAppSelector(state => state.authentications);
 
-    const initalState = { email: "", password: ""};
+    const initalState = { username: "", password: ""};
 
     const {values, onChange, onSubmit, loading, validationErrors} = useForm(initalState, callback, validation);
 
@@ -48,11 +49,11 @@ const Signin = () => {
           <Form onSubmit={onSubmit}>
 
             <Input 
-              label1="Email address" 
-              error={validationErrors.email} 
+              label1="Username or Email" 
+              error={validationErrors.username} 
               placeholder="..." 
-              name="email" 
-              value={values.email} 
+              name="username" 
+              value={values.username} 
               onChange={onChange} 
             />
 

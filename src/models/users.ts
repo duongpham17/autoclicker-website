@@ -6,6 +6,7 @@ import crypto from 'crypto';
 export interface IUsersApi {
     _id: string | Types.ObjectId,
     email: string,
+    username: string,
     role: "user" | "admin",
     credit: number,
     password: string,
@@ -25,11 +26,15 @@ export interface IUsersDocument extends Document, IUsersApi {
 };
 
 const schema = new Schema<IUsersDocument>({
+    username:{
+        type: String,
+        trim: true,
+        lowercase: true,
+    },
     email: {
         type: String,
         trim: true,
         lowercase: true,
-        unique: true
     },
     role: {
         type: String,
