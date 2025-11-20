@@ -1,32 +1,42 @@
+
 import styles from './Navbar.module.scss';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '@redux/hooks/useRedux';
-import { user_authentication } from '@localstorage';
-import Hacked from '@components/animations/Hacked';
+import { MdHome, MdOutlinePerson, MdOutlineQuestionMark } from "react-icons/md";
+import { AiFillSave } from "react-icons/ai";
+import Flex from '@components/flex/Flex';
+import Hover from '@components/hover/Style1';
+import Theme from './theme';
 
-const Navbar = () => {
+const NavbarLayout = () => {
 
-    const {user} = useAppSelector(state => state.authentications);
-
-    const onLogout = () => {
-        window.location.reload();
-        user_authentication.remove();
-    };
+    const { user } = useAppSelector(state => state.authentications);
 
     return (
         <nav className={styles.container}>
-            <div>
-                <Link to="/"><Hacked speed={90} text="Home"/></Link>
-                <Link to="/examples"><Hacked speed={90} text="Examples"/></Link>
-                <Link to="/starting"><Hacked speed={90} text="Starting"/></Link>
-            </div>
-            <div>
-                {!user && <Link to="/login"><Hacked speed={90} text="Login"/></Link>}
-                {user && <Link to="/credit"><Hacked speed={90} text={`Credit: ${user.credit}`}/></Link>}
-                {user && <button onClick={onLogout}><Hacked speed={90} text="Logout"/></button>}
-            </div>
+            <Flex>
+                <Hover message="Website">
+                    <Link to="/"><img src={process.env.PUBLIC_URL + '/logo64.png'} alt="Logo" /></Link>
+                </Hover>
+            </Flex>
+            { user 
+            ?
+                <Flex>
+                    <Hover message="Examples"><Link to="/examples"><MdOutlineQuestionMark/></Link></Hover>
+                    <Hover message="Credits"><Link to="/credit">{user.credit || 0}</Link></Hover>
+                    <Hover message="Profile"><Link to="/profile"><MdOutlinePerson/></Link></Hover>
+                    <Theme />
+                </Flex>
+            :
+                <Flex>
+                    <Hover message="Home"><Link to="/"><MdHome/></Link></Hover>
+                    <Hover message="Localised Scripts"><Link to="/localised"><AiFillSave/></Link></Hover>
+                    <Hover message="Login"><Link to="/login"><MdOutlinePerson/></Link></Hover>
+                    <Theme />
+                </Flex>
+            }
         </nav>
     )
 }
 
-export default Navbar
+export default NavbarLayout

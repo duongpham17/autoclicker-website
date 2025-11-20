@@ -24,3 +24,9 @@ export const user_authentication = {
     localStorage.removeItem(this.name);
   },
 };
+
+export const theme = {
+  name: `${unique_hostname}-theme`,
+  get: () => JSON.parse(localStorage.getItem(`${unique_hostname}-theme`) as any),
+  set: ({name, background}: {name: string, background: string}) => localStorage.setItem(`${unique_hostname}-theme`, JSON.stringify({name, background}))
+};

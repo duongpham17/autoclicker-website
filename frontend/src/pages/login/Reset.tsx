@@ -6,6 +6,7 @@ import Input from '@components/inputs/Style1';
 import Button from '@components/buttons/Style1';
 import Form from '@components/forms/Style1';
 import Text from '@components/texts/Style1';
+import Container from '@components/containers/Style1';
 
 interface Validation {
   password?: string,
@@ -58,7 +59,7 @@ const Reset = () => {
 
   async function callback(){
     const isPasswordCorrect = values.password === values.check_password;
-    if(!isPasswordCorrect) return dispatch(Authentication.state_errors("reset", "Password does not match"));
+    if(!isPasswordCorrect) return dispatch(Authentication.stateErrors("reset", "Password does not match"));
     await dispatch(Authentication.reset(values));
   };
 
@@ -96,14 +97,9 @@ const Reset = () => {
           onChange={onChange} 
         />
 
-        {errors.reset && <><br/><Text message={errors.reset} color='red'/><br/></>}
+        {errors.reset && <Container color="red"><Text color='red'>{errors.reset}</Text></Container>}
 
-        <Button 
-          type="submit" 
-          label1={"Reset Password"}
-          loading={loading} 
-          color="primary" 
-        />
+        <Button type="submit" loading={loading} color="primary">Reset Password</Button>
 
       </Form>
     </Fragment>

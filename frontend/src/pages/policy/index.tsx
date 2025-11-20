@@ -1,6 +1,6 @@
 
-import Hacked from '@components/animations/Hacked';
 import styles from './Policy.module.scss';
+import Hacked from '@components/animations/texts/Hacked';
 
 const PolicyPage = () => {
 
@@ -35,7 +35,7 @@ const PolicyPage = () => {
         },
         {
             title: "Governing Law",
-            message: `These terms are governed by the laws of [Your Country/Region]. Any disputes will be subject to the exclusive jurisdiction of the courts in United Kingdom`
+            message: `These terms are governed by the laws of United Kingdom. Any disputes will be subject to the exclusive jurisdiction of the courts in United Kingdom`
         },
         {
             title: "Changes to Terms",

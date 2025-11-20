@@ -1,14 +1,12 @@
 import styles from './Home.module.scss';
-import { Fragment, useState } from 'react';
-import { useAppSelector } from '@redux/hooks/useRedux';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { dmg_github_links } from 'environment';
-import { FaWindows } from "react-icons/fa";
-import Hacked from '@components/animations/Hacked';
+import { FaWindows, FaGithub, FaApple } from "react-icons/fa";
+import Container from '@components/containers/Style1';
+import Text from '@components/texts/Style1';
 
 const Home = () => {
-
-  const {user} = useAppSelector(state => state.authentications);
 
   const [loading, setLoading] = useState(false);
 
@@ -26,37 +24,36 @@ const Home = () => {
   return (
     <div className={styles.container}>
 
-      <section className={styles.image} id="image">
-        <Link to="/starting"><img src="/logo.png" alt="logo"/></Link>
-      </section>
+      <header id="image">
+        <Link to="/examples"><img src="/logo512.png" alt="logo"/></Link>
+      </header>
+      
+      <Container>
+        <section>
+          <Text size={16}>Create custom autoclickers, automate repetitive tasks, and boost productivity—whether for gaming, testing, or everyday routines. Fast, simple, and efficient.</Text>
+        </section>
+      </Container>
 
-      <section className={styles.credits} id="credits">
-        <div>
-          {user 
-            ? 
-            <Fragment>
-              <h1><Hacked text="Want more scripts?"/></h1>
-              <Link to="/credit"><Hacked text="You can buy more credits here."/></Link>
-            </Fragment>
-            :
-              <Fragment>
-              <Link to="/login"><Hacked text="Login or create an account."/></Link>
-            </Fragment>
-          }
-        </div>
-      </section>
+      <Container>
+        <section>
+          <Text size={20}>Github</Text>
+          <Link to="https://github.com/duongpham17/autoclicker-application-window"><FaGithub/></Link>
+        </section> 
+      </Container>
 
-      <section className={styles.downloads} id="download">
-        <div>
-          <h1><Hacked text="Downloads"/></h1>
-            <button 
-              className={loading ? styles.loading : ""} 
-              onClick={() => onDownload(dmg_github_links.win)} 
-              disabled={loading}>
-                <FaWindows/>
-            </button>
-        </div>
-      </section>
+      <Container>
+        <section className={styles.downloads} id="download">
+          <Text size={20}>Download for Windows</Text>
+          <button className={loading ? styles.loading : ""} onClick={() => onDownload(dmg_github_links.win)} disabled={loading}><FaWindows/></button>
+        </section>
+      </Container>
+
+      <Container>
+        <section className={styles.downloads} id="download">
+          <Text color="light" size={20}>Download for Mac ( Coming soon )</Text>
+          <button className={loading ? styles.loading : ""} disabled={loading}><FaApple/></button>
+        </section>
+      </Container>
 
     </div>
   )

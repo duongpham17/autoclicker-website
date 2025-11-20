@@ -6,12 +6,13 @@ import Input from '@components/inputs/Style1';
 import Button from '@components/buttons/Style1';
 import Form from '@components/forms/Style1';
 import Text from '@components/texts/Style1';
+import Container from '@components/containers/Style1';
 
 interface Validation {
   username?: string,
   password?: string,
   check_password?: string,
-}
+};
 
 const validation = (values: Validation) => {
     let errors: Validation = {};
@@ -52,14 +53,13 @@ const Signup = () => {
 
     async function callback(){
       const isPasswordCorrect = values.password === values.check_password;
-      if(!isPasswordCorrect) return dispatch(Authentication.state_errors("signup", "Password does not match"));
+      if(!isPasswordCorrect) return dispatch(Authentication.stateErrors("signup", "Password does not match"));
       await dispatch(Authentication.signup(values));
     };
 
   return (
     <Fragment>
       <Form onSubmit={onSubmit}>
-
 
         <Input 
           label1="Username" 
@@ -91,14 +91,9 @@ const Signup = () => {
           onChange={onChange} 
         />
 
-        {errors.signup && <><br/><Text message={errors.signup} color='red'/><br/></>}
+        {errors.signup && <Container color="red"><Text color='red'>{errors.signup}</Text></Container>}
 
-        <Button 
-          type="submit" 
-          label1={"Create account"}
-          loading={loading} 
-          color="primary" 
-        />
+        <Button type="submit" loading={loading} color="primary">Create account</Button>
 
       </Form>
     </Fragment>
