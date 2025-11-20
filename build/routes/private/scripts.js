@@ -12,4 +12,6 @@ router.get('/', scripts_1.find);
 router.post('/', scripts_1.create);
 router.patch('/', scripts_1.update);
 router.delete('/:id', scripts_1.remove);
+router.patch('/upgrade', scripts_1.upgrade);
+router.get('/search/:id', scripts_1.search);
 exports.default = router;

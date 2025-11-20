@@ -10,8 +10,8 @@ export interface IUsersApi {
     role: "user" | "admin",
     credit: number,
     password: string,
-    reset_password_expiration: number,
-    reset_link_hash: string,
+    verify_token_expiry: number,
+    verify_token: string,
     createdAt: number,
     correctPassword: (candidatePassword: string, userPassword: string) => Promise<boolean>,
     createVerifyToken: () => Promise<string>,
@@ -49,11 +49,11 @@ const schema = new Schema<IUsersDocument>({
         type: String,
         select: false,
     },
-    reset_link_hash: {
+    verify_token: {
         type: String,
         select: false
     },
-    reset_password_expiration: {
+    verify_token_expiry: {
         type: Number,
         default: () => Date.now() + (1 * 60 * 60 * 1000),
         select: false
@@ -75,13 +75,14 @@ schema.methods.correctPassword = async function(tryPassword: string, userPasswor
 };
 
 schema.methods.createVerifyToken = async function(): Promise<string> {
-    const token = crypto.randomBytes(16).toString('hex');
+    const raw = crypto.randomBytes(6); // 6 bytes = 48 bits entropy
+    const token = raw.toString("base64url").slice(0, 8); // safe + compact
     const hashToken = crypto.createHash('sha256').update(token).digest('hex');
-    this.reset_link_hash = hashToken;
-    this.reset_password_expiration = Date.now() + (5 * 60 * 1000); // 5 minute expiry
+    this.verify_token = hashToken;
+    this.verify_token_expiry = Date.now() + (5 * 60 * 1000); // 5 minute expiry
     await this.save();
     return token;
 };
- 
+
 const Users: Model<IUsersDocument> = mongoose.models.Users || model<IUsersDocument>('Users', schema);
 export default Users;

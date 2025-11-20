@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.forgot = exports.reset = exports.signup = exports.login = exports.persist = exports.protect = exports.restrict = exports.createSecureToken = void 0;
+exports.reset = exports.forgot = exports.signup = exports.login = exports.persist = exports.protect = exports.restrict = exports.createSecureToken = void 0;
 const authnetication_1 = require("../@email/authnetication");
 const helper_1 = require("../@utils/helper");
 const users_1 = __importDefault(require("../models/users"));
@@ -40,7 +40,7 @@ exports.protect = (0, helper_1.asyncBlock)(async (req, res, next) => {
         return next(new helper_1.appError('Login to access these features', 401));
     const jwt_secret = process.env.JWT_SECRET;
     const decodedId = jsonwebtoken_1.default.verify(token, jwt_secret);
-    const existingUser = await users_1.default.findById(decodedId.id).select('role credit user email');
+    const existingUser = await users_1.default.findById(decodedId.id);
     if (!existingUser)
         return next(new helper_1.appError('The user belonging to this token does not exist.', 401));
     req.user = existingUser;
@@ -92,37 +92,34 @@ exports.signup = (0, helper_1.asyncBlock)(async (req, res, next) => {
         cookie
     });
 });
-exports.reset = (0, helper_1.asyncBlock)(async (req, res, next) => {
-    const { token, password } = req.body;
-    const hash = crypto_1.default.createHash('sha256').update(token).digest('hex');
-    let user = await users_1.default.findOne({ reset_link_hash: hash }).select("reset_password_expiration");
-    if (!user)
-        return next(new helper_1.appError("Reset password failed, unable to authneticate.", 401));
-    const linkExpired = Date.now() > user.reset_password_expiration;
-    if (linkExpired)
-        return next(new helper_1.appError("This confirmation code no longer exist", 401));
-    user.password = password;
-    user.reset_link_hash = undefined;
-    user.reset_password_expiration = undefined;
-    await user.save();
-    const cookie = (0, exports.createSecureToken)(user._id.toString());
-    res.status(200).json({
-        status: "success",
-        data: user,
-        cookie
-    });
-});
 exports.forgot = (0, helper_1.asyncBlock)(async (req, res, next) => {
     const { email } = req.body;
     const user = await users_1.default.findOne({ email });
     if (!user)
         return next(new helper_1.appError("Email does not exist.", 401));
     const token = await user.createVerifyToken();
-    await (0, authnetication_1.Forgot)({
-        email: user.email,
-        code: token
-    });
+    await (0, authnetication_1.Forgot)({ email, token });
     res.status(200).json({
         status: "success",
+    });
+});
+exports.reset = (0, helper_1.asyncBlock)(async (req, res, next) => {
+    const { token, password } = req.body;
+    const hash = crypto_1.default.createHash('sha256').update(token).digest('hex');
+    let user = await users_1.default.findOne({ verify_token: hash }).select("verify_token_expiry");
+    if (!user)
+        return next(new helper_1.appError("Reset password failed, unable to authneticate.", 401));
+    const linkExpired = Date.now() > user.verify_token_expiry;
+    if (linkExpired)
+        return next(new helper_1.appError("Token has expired, try again.", 401));
+    user.password = password;
+    user.verify_token = undefined;
+    user.verify_token_expiry = undefined;
+    await user.save();
+    const cookie = (0, exports.createSecureToken)(user._id.toString());
+    res.status(200).json({
+        status: "success",
+        data: user,
+        cookie
     });
 });

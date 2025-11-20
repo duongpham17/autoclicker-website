@@ -1,6 +1,8 @@
 import { NextFunction, Response, Request } from 'express';
 import { appError, asyncBlock } from '../@utils/helper';
+import crypto from 'crypto';
 import Users, {InjectUserToRequest} from '../models/users';
+import { VerifyEmail } from '../@email/authnetication';
 
 export const find = asyncBlock(async(req: Request, res: Response, next: NextFunction) => {
 
@@ -63,6 +65,50 @@ export const password = asyncBlock(async(req: InjectUserToRequest, res: Response
     if (!user) return next(new appError("User not found", 404));
 
     user.password = password;
+    await user.save();
+
+    return res.status(200).json({
+        status: "success",
+        data: user
+    });
+  
+});
+
+export const verifyToken = asyncBlock(async(req: InjectUserToRequest, res: Response, next: NextFunction) => {
+
+    const {email} = req.body;
+
+    const exist = await Users.findOne({email});
+
+    if(exist) return next(new appError("Email already exist.", 401));
+
+    const token = await req.user.createVerifyToken();
+
+    await VerifyEmail({email, token})
+
+    return res.status(200).json({
+        status: "success",
+    });
+
+});
+
+export const verifyEmail = asyncBlock(async(req: InjectUserToRequest, res: Response, next: NextFunction) => {
+
+    const {email, token} = req.body;
+
+    const hash = crypto.createHash('sha256').update(token).digest('hex');
+
+    let user = await Users.findOne({ verify_token: hash }).select("+verify_token +verify_token_expiry");
+
+    if(!user) return next(new appError("Unable to verify token, try again.", 401));
+
+    const linkExpired = Date.now() > user.verify_token_expiry;
+
+    if(linkExpired) return next(new appError("Token has expired, try again.", 401));
+
+    user.email = email;
+    user.verify_token = undefined as any;
+    user.verify_token_expiry = undefined as any;
     await user.save();
 
     return res.status(200).json({

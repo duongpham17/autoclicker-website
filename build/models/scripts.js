@@ -58,6 +58,10 @@ const schema = new mongoose_1.Schema({
         type: Number,
         default: 10
     },
+    upgrade: {
+        type: Number,
+        default: 1
+    },
     commands: [{
             name: { type: String },
             color: { type: String },
@@ -68,6 +72,7 @@ const schema = new mongoose_1.Schema({
             type: { type: String },
             click: { type: String },
             toggle: { type: String },
+            modifiers: { type: String },
             xyrange: { type: Number },
             x: { type: Number },
             y: { type: Number },

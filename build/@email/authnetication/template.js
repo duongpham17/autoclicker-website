@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AUTHENTICATION = void 0;
 const _environment_1 = require("../../@environment");
-const AUTHENTICATION = ({ code }) => `
+const AUTHENTICATION = ({ token }) => `
 <html>
     <body>          
         <table style="width: 100%; border-spacing: 0px;background: white; padding: 2rem;">
@@ -15,7 +15,7 @@ const AUTHENTICATION = ({ code }) => `
             </tr>
             <tr>
                 <td style="padding: 1rem 0rem">
-                	<p style="padding: 1rem 0rem; color: #1F51FF; font-size: 1rem"> ${code} </p>
+                	<p style="padding: 1rem 0rem; color: #1F51FF; font-size: 2rem"> ${token} </p>
                 	<p style="padding: 1rem 0rem"> This code will expire in 5 minutes</p>
                 </td>
             </tr>

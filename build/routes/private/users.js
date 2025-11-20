@@ -13,4 +13,6 @@ router.post('/', users_1.create);
 router.patch('/', users_1.update);
 router.delete('/', users_1.remove);
 router.patch('/password', users_1.password);
+router.patch('/verify/token', users_1.verifyToken);
+router.patch('/verify/email', users_1.verifyEmail);
 exports.default = router;

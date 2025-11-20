@@ -66,11 +66,11 @@ const schema = new mongoose_1.Schema({
         type: String,
         select: false,
     },
-    reset_link_hash: {
+    verify_token: {
         type: String,
         select: false
     },
-    reset_password_expiration: {
+    verify_token_expiry: {
         type: Number,
         default: () => Date.now() + (1 * 60 * 60 * 1000),
         select: false
@@ -90,10 +90,11 @@ schema.methods.correctPassword = async function (tryPassword, userPassword) {
     return bcryptjs_1.default.compare(tryPassword, userPassword);
 };
 schema.methods.createVerifyToken = async function () {
-    const token = crypto_1.default.randomBytes(16).toString('hex');
+    const raw = crypto_1.default.randomBytes(6); // 6 bytes = 48 bits entropy
+    const token = raw.toString("base64url").slice(0, 8); // safe + compact
     const hashToken = crypto_1.default.createHash('sha256').update(token).digest('hex');
-    this.reset_link_hash = hashToken;
-    this.reset_password_expiration = Date.now() + (5 * 60 * 1000); // 5 minute expiry
+    this.verify_token = hashToken;
+    this.verify_token_expiry = Date.now() + (5 * 60 * 1000); // 5 minute expiry
     await this.save();
     return token;
 };

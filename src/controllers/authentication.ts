@@ -45,7 +45,7 @@ export const protect = asyncBlock(async(req: InjectUserToRequest, res: Response,
 
     const decodedId:any = jwt.verify(token, jwt_secret);
 
-    const existingUser = await User.findById(decodedId.id).select('role credit user email');
+    const existingUser = await User.findById(decodedId.id);
 
     if(!existingUser) return next(new appError('The user belonging to this token does not exist.', 401));
 
@@ -114,34 +114,6 @@ export const signup = asyncBlock(async(req: Request, res: Response, next: NextFu
     });
 });
 
-export const reset = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
-    const {token, password} = req.body;
-
-    const hash = crypto.createHash('sha256').update(token).digest('hex');
-
-    let user = await User.findOne({reset_link_hash: hash}).select("reset_password_expiration");
-
-    if(!user) return next(new appError("Reset password failed, unable to authneticate.", 401));
-
-    const linkExpired = Date.now() > user.reset_password_expiration;
-
-    if(linkExpired) return next(new appError("This confirmation code no longer exist", 401));
-
-    user.password = password;
-    user.reset_link_hash = undefined as any;
-    user.reset_password_expiration = undefined as any;
-
-    await user.save(); 
-    
-    const cookie = createSecureToken(user._id.toString());
-
-    res.status(200).json({
-        status: "success",
-        data: user,
-        cookie
-    });
-});
-
 export const forgot = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
     const {email} = req.body;
 
@@ -151,12 +123,36 @@ export const forgot = asyncBlock(async (req: Request, res: Response, next: NextF
 
     const token = await user.createVerifyToken();
 
-    await Forgot({
-        email: user.email,
-        code: token
-    });
+    await Forgot({ email, token });
 
     res.status(200).json({
         status: "success",
+    });
+});
+
+export const reset = asyncBlock(async (req: Request, res: Response, next: NextFunction) => {
+    const {token, password} = req.body;
+
+    const hash = crypto.createHash('sha256').update(token).digest('hex');
+
+    let user = await User.findOne({verify_token: hash}).select("verify_token_expiry");
+
+    if(!user) return next(new appError("Reset password failed, unable to authneticate.", 401));
+
+    const linkExpired = Date.now() > user.verify_token_expiry;
+
+    if(linkExpired) return next(new appError("Token has expired, try again.", 401));
+
+    user.password = password;
+    user.verify_token = undefined as any;
+    user.verify_token_expiry = undefined as any;
+    await user.save(); 
+    
+    const cookie = createSecureToken(user._id.toString());
+
+    res.status(200).json({
+        status: "success",
+        data: user,
+        cookie
     });
 });

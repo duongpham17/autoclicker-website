@@ -9,7 +9,7 @@ import hpp from "hpp";
  * Middleware to limit repeated requests from the same IP.
  * Allows 100 requests per 60 seconds per IP.
  */
-const rateLimiter = new RateLimiterMemory({ points: 100, duration: 60 });
+const rateLimiter = new RateLimiterMemory({ points: 150, duration: 60 });
 const rateLimitMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     try {
         await rateLimiter.consume(req.ip as string | number);

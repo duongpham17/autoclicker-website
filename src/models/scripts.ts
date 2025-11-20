@@ -8,6 +8,7 @@ export interface IScriptsApi {
     commands: IScriptsCommands[],
     description: string,
     private: boolean,
+    upgrade: number,
     usedAt: number,
     createdAt: number,
 };
@@ -23,6 +24,7 @@ export interface IScriptsCommands {
     event?: string,
     click?: string,
     toggle?: string,
+    modifiers?: string,
     xyrange?: number,
     x?: number,
     y?: number,
@@ -30,7 +32,7 @@ export interface IScriptsCommands {
     pixel_color?: string,
     pixel_x?: number,
     pixel_y?: number,
-    pixel_wait?: number
+    pixel_wait?: number,
 };
 
 export interface IScriptsDocument extends Document, IScriptsApi {
@@ -58,6 +60,10 @@ const schema = new Schema<IScriptsDocument>({
         type: Number,
         default: 10
     },
+    upgrade: {
+        type: Number,
+        default: 1
+    },
     commands: [{
         name: { type: String},
         color: { type: String },
@@ -68,6 +74,7 @@ const schema = new Schema<IScriptsDocument>({
         type: { type: String },
         click: { type: String },
         toggle: {type: String},
+        modifiers: {type: String},
         xyrange: {type: Number},
         x: { type: Number },
         y: { type: Number },
