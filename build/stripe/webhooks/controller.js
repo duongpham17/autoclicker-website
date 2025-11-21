@@ -29,10 +29,13 @@ exports.paymentIntent = (0, helper_1.asyncBlock)(async (req, res, next) => {
     switch (event.type) {
         case 'payment_intent.succeeded':
             const payment = event.data.object;
+            const { id } = payment;
             const { credit, user_id } = payment.metadata;
             try {
-                await users_1.default.findByIdAndUpdate(user_id, { $inc: { credit: Number(credit) } }, { new: true });
-                await orders_1.default.create(payment.metadata);
+                await Promise.all([
+                    users_1.default.findByIdAndUpdate(user_id, { $inc: { credit: Number(credit) } }, { new: true }),
+                    orders_1.default.create({ ...payment.metadata, stripe_id: id })
+                ]);
             }
             catch (err) {
                 console.log(err);

@@ -28,6 +28,10 @@ const PolicyPage = () => {
         {
             title: "Desktop App",
             message: "The application will require access to your privacy and secuirty. It will require access to moving mouse and clicking your mouse. It will also require access to moving the mouse around the screen."
+        },
+        {
+            title: "Email & Username",
+            message: "An email is only required if you want the ability to recover your account; otherwise, you can sign up using just a username and password. This ensures that none of your personal information is stored in our database."
         }
     ]
 

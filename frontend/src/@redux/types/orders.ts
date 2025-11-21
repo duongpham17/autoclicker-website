@@ -3,8 +3,10 @@
 export interface IOrdersApi {
     _id: string,
     user_id: string,
+    stripe_id: string,
     email: string,
     credit: number,
+    total: number,
     createdAt: number,
 };
 

@@ -13,14 +13,17 @@ exports.credit = (0, helper_1.asyncBlock)(async (req, res, next) => {
     if (!credit || typeof credit !== 'number' || credit <= 0 || !Number.isInteger(credit)) {
         return res.status(400).json({ status: 'fail', message: 'Invalid credit amount' });
     }
+    ;
+    const cost = 5;
     const paymentIntent = await stripe.paymentIntents.create({
         automatic_payment_methods: { enabled: true },
-        amount: Number(credit) * 500,
+        amount: Number(credit) * (cost * 100), // has to be in pennies
         currency: 'gbp',
         metadata: {
             credit: credit.toString(),
             user_id: req.user._id.toString(),
             email: req.user.email,
+            total: Number(credit) * cost,
         },
     });
     return res.status(200).json({

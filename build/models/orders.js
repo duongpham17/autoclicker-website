@@ -41,12 +41,18 @@ const schema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Users'
     },
+    stripe_id: {
+        type: String
+    },
     email: {
         type: String,
         trim: true,
         lowercase: true,
     },
     credit: {
+        type: Number
+    },
+    total: {
         type: Number
     },
     createdAt: {

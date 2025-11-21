@@ -6,7 +6,6 @@ import Email from './email';
 import Password from './password';
 import Username from './username';
 import Orders from './orders';
-import Credits from './credits';
 
 const ProfilePage = () => {
 
@@ -18,23 +17,19 @@ const ProfilePage = () => {
         <div className={styles.container}>
 
             <Container style={style} color={color}>
-                <Credits />
-            </Container>
-
-            <Container style={style} color={color}>
                 <Username />
             </Container>
 
             <Container style={style} color={color}>
                 <Email />
             </Container>
-            
-            <Container style={style} color={color}>
-                <Password />
-            </Container>
 
             <Container style={style} color={color}>
                 <Orders />
+            </Container>
+
+            <Container style={style} color={color}>
+                <Password />
             </Container>
             
             <Container style={style} color={color}>

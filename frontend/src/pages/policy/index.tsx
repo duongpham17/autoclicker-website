@@ -18,6 +18,10 @@ const PolicyPage = () => {
             message: `All content on this website and app, including text, images, logos, and software, is the property of [Your Business Name] and protected by copyright laws. You may not copy, reproduce, distribute, or create derivative works without permission.`
         },
         {
+            title: "Creating Accounts & Recovery",
+            message: "When creating an account, an email address is not required—you can sign up using only a username and password. Verifying your account with an email is optional and can be done at any time. However, please keep in mind that an email is necessary if you ever need to recover a lost username or password. This approach is designed to protect your privacy, especially if you prefer not to share your email address with us."
+        },
+        {
             title: "User Accounts",
             message: `If you create an account, you are responsible for maintaining the confidentiality of your login details and for all activities that occur under your account.`
         },

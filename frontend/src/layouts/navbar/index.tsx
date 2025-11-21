@@ -3,7 +3,6 @@ import styles from './Navbar.module.scss';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '@redux/hooks/useRedux';
 import { MdHome, MdOutlinePerson, MdOutlineQuestionMark } from "react-icons/md";
-import { AiFillSave } from "react-icons/ai";
 import Flex from '@components/flex/Flex';
 import Hover from '@components/hover/Style1';
 import Theme from './theme';
@@ -30,7 +29,6 @@ const NavbarLayout = () => {
             :
                 <Flex>
                     <Hover message="Home"><Link to="/"><MdHome/></Link></Hover>
-                    <Hover message="Localised Scripts"><Link to="/localised"><AiFillSave/></Link></Hover>
                     <Hover message="Login"><Link to="/login"><MdOutlinePerson/></Link></Hover>
                     <Theme />
                 </Flex>

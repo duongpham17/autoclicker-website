@@ -30,10 +30,13 @@ export const paymentIntent = asyncBlock(async (req: Request, res: Response, next
     switch (event.type) {
         case 'payment_intent.succeeded':
             const payment = event.data.object as Stripe.PaymentIntent;
+            const {id} = payment;
             const {credit, user_id} = payment.metadata;
             try{
-                await Users.findByIdAndUpdate(user_id, {$inc: {credit: Number(credit)}}, {new: true});
-                await Orders.create(payment.metadata);
+                await Promise.all([
+                    Users.findByIdAndUpdate(user_id, {$inc: {credit: Number(credit)}}, {new: true}),
+                    Orders.create({...payment.metadata, stripe_id: id})
+                ]);
             } catch(err:any){
                 console.log(err)
             }

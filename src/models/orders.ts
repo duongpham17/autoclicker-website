@@ -3,8 +3,10 @@ import mongoose, { Schema, model, Types, Document, Model } from 'mongoose';
 export interface IOrdersApi {
     _id: string | Types.ObjectId,
     user_id: string | Types.ObjectId,
+    stripe_id: string,
     email: string,
     credit: number,
+    total: number,
     createdAt: number,
 };
 
@@ -17,12 +19,18 @@ const schema = new Schema<IOrdersDocument>({
         type: Schema.Types.ObjectId,
         ref: 'Users'
     },
+    stripe_id: {
+        type: String
+    },
     email: {
         type: String,
         trim: true,
         lowercase: true,
     },
     credit: {
+        type: Number
+    },
+    total: {
         type: Number
     },
     createdAt: {
