@@ -28,6 +28,7 @@ const NavbarLayout = () => {
                 </Flex>
             :
                 <Flex>
+                    <Hover message="Examples"><Link to="/examples"><MdOutlineQuestionMark/></Link></Hover>
                     <Hover message="Login"><Link to="/login"><MdOutlinePerson/></Link></Hover>
                     <Theme />
                 </Flex>
